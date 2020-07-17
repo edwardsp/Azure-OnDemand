@@ -81,7 +81,7 @@
                 "install-jupyter-app-deps",
                 "install-theia-deps"
             ]
-        },
+        }
     },
     "install": [
         {
