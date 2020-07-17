@@ -7,7 +7,7 @@ git clone https://github.com/eclipse-theia/theia.git
 pushd theia
 
 cp -r examples/browser examples/azure-ondemand
-sed -i sed 's/example-browser/azure-ondemand/g;s/Theia Browser Example/Azure OnDemand Theia IDE/g;s/^.*api-sample.*$//g' examples/azure-ondemand/package.json
+sed -i 's/example-browser/azure-ondemand/g;s/Theia Browser Example/Azure OnDemand Theia IDE/g;s/^.*api-sample.*$//g' examples/azure-ondemand/package.json
 
 yarn
 

@@ -129,7 +129,7 @@ EOF
 
 
 git clone https://github.com/edwardsp/Azure-OnDemand.git
-mv Azure-OnDemand/apps/theia /etc/ood/apps/sys/.
+mv Azure-OnDemand/apps/theia /var/www/ood/apps/sys/.
 rm -rf Azure-OnDemand
 
 systemctl try-restart httpd24-httpd.service httpd24-htcacheclean.service
