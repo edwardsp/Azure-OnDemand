@@ -16,7 +16,7 @@ fi
 
 RealMemory=$(echo $VM_CAPABILITIES | jq -r '.[] | select(.name=="MemoryGB") | .value')
 # MemoryGB can be a floating value
-RealMemory=$(bc <<< "(${RealMemory} * 1024) / 1")
+RealMemory=$(bc <<< "(${RealMemory} * 1000) / 1")
 
 CPUs=$(echo $VM_CAPABILITIES | jq -r '.[] | select(.name=="vCPUs") | .value')
 Boards=1
