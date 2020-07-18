@@ -10,20 +10,3 @@ sudo yum -y install yarn
 # theia dependencies
 sudo yum groupinstall -y "Development Tools"
 sudo yum install -y git libX11-devel libxkbfile-devel
-
-git clone https://github.com/eclipse-theia/theia
-sudo mv theia /opt
-cd /opt/theia
-yarn
-
-cat <<EOF >launch.sh
-#!/bin/bash
-
-port=$1
-workspace=$2
-
-cd /opt/theia/examples/browser
-yarn run start --port $port "$workspace"
-EOF
-chmod +x launch.sh
-
