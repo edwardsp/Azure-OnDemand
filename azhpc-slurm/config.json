@@ -202,11 +202,6 @@
       "sudo": true
     },
     {
-      "script": "slurmd.sh",
-      "tag": "slurmclient",
-      "sudo": true
-    },
-    {
       "script": "install-interactive-desktop-deps.sh",
       "tag": "install-interactive-desktop-deps",
       "sudo": true
@@ -233,6 +228,11 @@
         "variables.ood_user",
         "variables.ood_password"
       ]
+    },
+    {
+      "script": "slurmd.sh",
+      "tag": "slurmclient",
+      "sudo": true
     },
     {
       "type": "local_script",
