@@ -8,8 +8,9 @@
     "hpc_image": "OpenLogic:CentOS-HPC:7.7:latest",
     "ood_user": "hpcuser",
     "ood_password": "<NOT-SET>",
+    "ood_dns_name": "",
     "ood_vm_type": "Standard_D16s_v3",
-    "interactive_vm_type": "Standard_D4s_v3",
+    "interactive_vm_type": "Standard_D8s_v3",
     "viz_vm_type": "Standard_HB60rs",
     "compute_vm_type": "Standard_HB60rs",
     "interactive_max_instances": 2,
@@ -29,6 +30,8 @@
     "ood": {
       "type": "vm",
       "public_ip": "true",
+      "dns_name": "variables.ood_dns_name",
+      "nsg_allow": ["ssh", "http"],
       "vm_type": "variables.ood_vm_type",
       "image": "variables.image",
       "accelerated_networking": "true",
@@ -233,15 +236,6 @@
       "script": "slurmd.sh",
       "tag": "slurmclient",
       "sudo": true
-    },
-    {
-      "type": "local_script",
-      "script": "open_nsg_port.sh",
-      "args": [
-        "variables.resource_group",
-        "ood",
-        "80"
-      ]
     }
   ]
 }
