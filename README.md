@@ -33,7 +33,7 @@ Initialise a project from the feature-test example:
 
 This will create a new project in the `ood` directory that is ready to deploy.  Run the following to build (although feel free to adjust any of the variables in your config.json for you own setup, e.g. max instances, vm type, location etc):
 
-    cd ood
+    cd slurm-azure-ondemand
     azhpc-build
 
 Once built you can access the ood VM in the browser on port 80.
