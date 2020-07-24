@@ -60,7 +60,8 @@
         "install-interactive-desktop-deps",
         "install-jupyter-app-deps",
         "install-theia-deps",
-        "install-theia"
+        "install-theia",
+        "cvmfs"
       ]
     },
     "compute": {
@@ -76,7 +77,8 @@
         "localuser",
         "munge",
         "slurmclient",
-        "disable-selinux"
+        "disable-selinux",
+        "cvmfs"
       ]
     },
     "interactive": {
@@ -93,7 +95,8 @@
         "slurmclient",
         "disable-selinux",
         "install-jupyter-app-deps",
-        "install-theia-deps"
+        "install-theia-deps",
+        "cvmfs"
       ]
     },
     "viz": {
@@ -110,7 +113,8 @@
         "munge",
         "slurmclient",
         "disable-selinux",
-        "install-interactive-desktop-deps"
+        "install-interactive-desktop-deps",
+        "cvmfs"
       ]
     }
   },
@@ -235,6 +239,11 @@
     {
       "script": "slurmd.sh",
       "tag": "slurmclient",
+      "sudo": true
+    },
+    {
+      "script": "cvmfs-azure.demo.sh",
+      "tag": "cvmfs",
       "sudo": true
     }
   ]
