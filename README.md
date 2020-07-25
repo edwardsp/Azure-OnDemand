@@ -6,7 +6,7 @@ Open OnDemand running on Azure
 
 These instructions will create a running setup of OOD using slurm and auto-scaling.  Features include:
 
-* PBS Cluster
+* Slurm Cluster
 * Interactive Desktop (not accelerated)
 * Jupyter
 * Theia
