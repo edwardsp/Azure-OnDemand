@@ -1,0 +1,42 @@
+{
+    "region": "westeurope",
+    "auth": {
+        "type": "local",
+        "users": {
+            "hpcuser" : {
+                "sudo": true
+            }
+        }
+    },
+    "scheduler": {
+        "type": "slurm",
+        "queues": {
+            "viz": {
+                "sku": "Standard_NV12",
+                "max_instances": 4
+            },
+            "interactive": {
+                "sku": "Standard_D16s_v3",
+                "max_instances": 4
+            },
+            "compute": {
+                "sku": "Standard_HC44rs",
+                "max_instances": 32
+            }
+        }
+    },
+    "apps": {
+        "desktop": {
+            "queue": "viz",
+            "ncpus": 12
+        },
+        "jupyter": {
+            "queue": "interactive",
+            "ncpus": 4
+        },
+        "theia": {
+            "queue": "interactive",
+            "ncpus": 4
+        }
+    }
+}
