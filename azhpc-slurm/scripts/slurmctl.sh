@@ -1,5 +1,5 @@
 #!/bin/bash
-
+AZHPC_CONFIG=${1-config.json}
 yum install -y epel-release screen
 
 yum install perl-ExtUtils-MakeMaker gcc mariadb-devel openssl openssl-devel pam-devel rpm-build numactl numactl-devel hwloc hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel man2html libibmad libibumad -y
@@ -65,7 +65,7 @@ chmod +x /apps/slurm/scripts/*.sh
 ls -alh /apps/slurm/scripts
 
 mkdir -p /apps/slurm/azscale/scripts
-cp scripts/config.json /apps/slurm/azscale
+cp scripts/$AZHPC_CONFIG /apps/slurm/azscale/config.json
 cp scripts/*_id_rsa* /apps/slurm/azscale
 chmod 600 /apps/slurm/azscale/*_id_rsa
 chmod 644 /apps/slurm/azscale/*_id_rsa.pub
