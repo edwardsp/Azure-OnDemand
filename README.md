@@ -47,10 +47,15 @@ To speed up node provisioning custom images can be built as part of the installa
 
 ```
  $ azhpc-build -c ood.json
+```
+It will take more 20+ minutes to finish.
+
+```
  $ azhpc-build --no-vnet -c create_images.json
 ```
+It will take more 23+ minutes to finish.
 
-There will be 3 images created into the resource group specified in the init command above.
+There will be 3 images `ood-compute`, `ood-interactive` and `ood-viz` created into the resource group specified in the init command above.
 
 ## Feature-test example
 

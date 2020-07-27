@@ -65,7 +65,7 @@ chmod +x /apps/slurm/scripts/*.sh
 ls -alh /apps/slurm/scripts
 
 mkdir -p /apps/slurm/azscale/scripts
-cp scripts/$AZHPC_CONFIG /apps/slurm/azscale
+cp scripts/$AZHPC_CONFIG /apps/slurm/azscale/config.json
 cp scripts/*_id_rsa* /apps/slurm/azscale
 chmod 600 /apps/slurm/azscale/*_id_rsa
 chmod 644 /apps/slurm/azscale/*_id_rsa.pub

@@ -107,7 +107,7 @@
         "resume.sh",
         "hpcadmin_id_rsa",
         "hpcadmin_id_rsa.pub",
-        "slurm_partitions.json"
+        "config.json"
       ],
       "sudo": true
     },
