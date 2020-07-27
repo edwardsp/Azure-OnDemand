@@ -27,19 +27,6 @@ v2:
     adapter: "slurm"
     host: "ood"
     exec: "/usr/bin"
-  custom:
-    grafana:
-      host: "http://monitor:3000"
-        orgId: 1
-          dashboard:
-            name: "telegraf-system-dashboard"
-            uid: "000000127"
-            panels:
-              cpu: 8
-              memory: 16
-          labels:
-            cluster: "cluster"
-            host: "host"
   batch_connect:
     basic:
       script_wrapper: |
