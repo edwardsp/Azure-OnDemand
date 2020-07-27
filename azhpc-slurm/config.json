@@ -125,7 +125,7 @@
       "type": "vm",
       "public_ip": "true",
       "dns_name": "variables.grafana_dns_name",
-      "nsg_allow": ["ssh", "https", "3000"],
+      "nsg_allow": ["ssh", "https"],
       "vm_type": "variables.grafana_vm_type",
       "image": "variables.image",
       "accelerated_networking": "true",
