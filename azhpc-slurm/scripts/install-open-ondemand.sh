@@ -27,6 +27,19 @@ v2:
     adapter: "slurm"
     host: "ood"
     exec: "/usr/bin"
+  custom:
+    grafana:
+      host: "http://monitor:3000"
+        orgId: 1
+          dashboard:
+            name: "telegraf-system-dashboard"
+            uid: "000000127"
+            panels:
+              cpu: 8
+              memory: 16
+          labels:
+            cluster: "cluster"
+            host: "host"
   batch_connect:
     basic:
       script_wrapper: |
@@ -39,6 +52,9 @@ v2:
         export WEBSOCKIFY_CMD="/usr/bin/websockify"
         %s
 EOF
+
+### <iframe src="http://localhost:8080/d-solo/000000127/telegraf-system-dashboard?orgId=1&refresh=10s&var-datasource=azhpc&var-inter=10s&var-ncores=8&var-server=All&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&from=1595852523820&to=1595856123820&panelId=28239" width="450" height="200" frameborder="0"></iframe>
+
 
 # reverse proxy (https://osc.github.io/ood-documentation/release-1.7/app-development/interactive/setup/enable-reverse-proxy.html)
 cat <<EOF >>/etc/ood/config/ood_portal.yml
