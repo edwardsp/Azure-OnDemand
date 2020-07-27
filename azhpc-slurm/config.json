@@ -127,6 +127,10 @@
       "dns_name": "variables.grafana_dns_name",
       "vm_type": "variables.grafana_vm_type",
       "image": "variables.image",
+      "managed_identity": {
+        "role": "contributor",
+        "scope": "resource_group"
+      },
       "accelerated_networking": "true",
       "storage_sku": "Premium_LRS",
       "subnet": "hpc",
