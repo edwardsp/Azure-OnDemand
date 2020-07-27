@@ -112,13 +112,3 @@ cp $DIR/telegraf_dashboard.json $dashboard_dir
 echo "Start grafana-server"
 systemctl stop grafana-server
 systemctl start grafana-server
-
-echo "Open port 3000 for `hostname`"
-az network nsg rule create \
-    -g ${resource_group} \
-    --nsg-name $(echo `hostname`)_nsg \
-    --name grafanaport \
-    --priority 2000 \
-    --protocol Tcp \
-    --destination-port-ranges 3000 \
-    --output table
