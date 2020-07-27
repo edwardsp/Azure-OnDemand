@@ -42,6 +42,16 @@ Once built you can access the ood VM in the browser on port 80.
 
 Browse to the OOD portal with the FQDN, logon with user `hpcuser` and the password defined above
 
+### Build with images
+To speed up node provisioning custom images can be built as part of the installation and used by SLURM. To do this, run the same init command as above, but the build is now split in two steps :
+
+```
+ $ azhpc-build -c ood.json
+ $ azhpc-build --no-vnet -c create_images.json
+```
+
+There will be 3 images created into the resource group specified in the init command above.
+
 ## Feature-test example
 
 Note: development is working with the azhpc-slurm example

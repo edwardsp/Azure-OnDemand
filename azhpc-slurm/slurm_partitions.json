@@ -1,0 +1,60 @@
+{
+  "location": "variables.location",
+  "resource_group": "variables.resource_group",
+  "install_from": "fqdn.ood",
+  "admin_user": "hpcadmin",
+  "variables": {
+    "interactive_vm_type": "Standard_D8s_v3",
+    "viz_vm_type": "Standard_HB60rs",
+    "compute_vm_type": "Standard_HB60rs",
+    "interactive_max_instances": 2,
+    "viz_max_instances": 2,
+    "compute_max_instances": 2,
+    "location": "westeurope",
+    "image_resource_group": "variables.resource_group",
+    "compute_image_name": "ood-compute",
+    "interactive_image_name": "ood-interactive",
+    "viz_image_name": "ood-viz",
+    "resource_group": "<NOT-SET>"
+  },
+  "vnet": {
+    "name": "hpcvnet",
+    "address_prefix": "10.2.0.0/20",
+    "subnets": {
+      "hpc": "10.2.0.0/22"
+    }
+  },
+  "resources": {
+    "compute": {
+      "type": "slurm_partition",
+      "vm_type": "variables.compute_vm_type",
+      "instances": "variables.compute_max_instances",
+      "availability_set": "compute",
+      "image": "image.{{variables.image_resource_group}}.{{variables.compute_image_name}}",
+      "subnet": "hpc",
+      "tags": [
+      ]
+    },
+    "interactive": {
+      "type": "slurm_partition",
+      "vm_type": "variables.interactive_vm_type",
+      "instances": "variables.instances",
+      "image": "image.{{variables.image_resource_group}}.{{variables.interactive_image_name}}",
+      "subnet": "hpc",
+      "tags": [
+      ]
+    },
+    "viz": {
+      "type": "slurm_partition",
+      "vm_type": "variables.viz_vm_type",
+      "instances": "variables.viz_max_instances",
+      "availability_set": "compute",
+      "image": "image.{{variables.image_resource_group}}.{{variables.viz_image_name}}",
+      "subnet": "hpc",
+      "tags": [
+      ]
+    }
+  },
+  "install": [
+  ]
+}
