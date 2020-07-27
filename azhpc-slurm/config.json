@@ -131,6 +131,7 @@
       "storage_sku": "Premium_LRS",
       "subnet": "hpc",
       "tags": [
+        "azcli",
         "install-grafana"
       ]
     }
