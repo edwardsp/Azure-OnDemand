@@ -52,6 +52,8 @@ systemctl enable grafana-server
 #sudo firewall-cmd --permanent --zone=public --add-port=3000/tcp
 #echo "#### Reload firewall rules:"
 #sudo firewall-cmd --reload
+# echo "#### Root traffice from port 80 to port 3000"
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
 
 echo "#### Configuration of influxDB User and DB:"
 curl "http://localhost:8086/query" --data-urlencode "q=CREATE USER admindb WITH PASSWORD '$GRAFANA_PWD' WITH ALL PRIVILEGES"
