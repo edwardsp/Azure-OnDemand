@@ -82,7 +82,8 @@
         "munge",
         "slurmclient",
         "disable-selinux",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
       ]
     },
     "interactive": {
@@ -100,7 +101,8 @@
         "disable-selinux",
         "install-jupyter-app-deps",
         "install-theia-deps",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
       ]
     },
     "viz": {
@@ -118,7 +120,8 @@
         "slurmclient",
         "disable-selinux",
         "install-interactive-desktop-deps",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
       ]
     },
     "monitor": {
@@ -127,15 +130,10 @@
       "dns_name": "variables.grafana_dns_name",
       "vm_type": "variables.grafana_vm_type",
       "image": "variables.image",
-      "managed_identity": {
-        "role": "contributor",
-        "scope": "resource_group"
-      },
       "accelerated_networking": "true",
       "storage_sku": "Premium_LRS",
       "subnet": "hpc",
       "tags": [
-        "azcli",
         "install-grafana"
       ]
     }
@@ -279,6 +277,16 @@
         "variables.grafana_user",
         "variables.grafana_pwd",
         "variables.resource_group"
+      ]
+    },
+    {
+      "script": "install-telegraf.sh",
+      "tag": "install-telegraf",
+      "sudo": true,
+      "args": [
+        "monitor",
+        "variables.grafana_user",
+        "variables.grafana_pwd"
       ]
     }
   ]

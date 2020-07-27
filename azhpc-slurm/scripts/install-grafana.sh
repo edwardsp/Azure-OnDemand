@@ -109,6 +109,11 @@ chown grafana:grafana $dashboard_dir
 
 cp $DIR/telegraf_dashboard.json $dashboard_dir
 
+## Enabling anonymous auth for ood dashboards:
+
+sed -i 's/\[auth.anonymous\]/\[auth.anonymous\]\nenabled = true\norg_name = Azure Compute\norg_role = Viewer/' /etc/grafana/grafana.ini
+sed -i 's/^;allow_embedding.*/allow_embedding = true/' /etc/grafana/grafana.ini
+
 echo "Start grafana-server"
 systemctl stop grafana-server
 systemctl start grafana-server
