@@ -110,10 +110,48 @@ cat <<EOF >/var/www/ood/apps/sys/jupyter/submit.yml.erb
 batch_connect:
   template: "basic"
   extra_jupyter_args: ""
+  modules: ""
 script:
   native:
     - "--cpus-per-task=4"
     - "--partition=interactive"
+EOF
+
+cat <<EOF >/var/www/ood/apps/sys/jupyter/template/script.sh.erb
+#!/usr/bin/env bash
+
+# Benchmark info
+echo "TIMING - Starting main script at: \$(date)"
+
+# Set working directory to home directory
+cd "\${HOME}"
+
+#
+# Start Jupyter Notebook Server
+#
+
+<%- unless context.modules.blank? -%>
+# Purge the module environment to avoid conflicts
+module purge
+
+# Load the require modules
+#module load <%= context.modules %>
+
+# List loaded modules
+module list
+<%- end -%>
+
+conda init
+source ~/.bashrc
+
+conda activate tensorflow_env
+
+# Benchmark info
+echo "TIMING - Starting jupyter at: \$(date)"
+
+# Launch the Jupyter Notebook Server
+set -x
+jupyter notebook --config="\${CONFIG_FILE}" <%= context.extra_jupyter_args %>
 EOF
 
 # change the branding

@@ -59,6 +59,7 @@
         "open-ondemand",
         "install-interactive-desktop-deps",
         "install-jupyter-app-deps",
+	"install-conda",
         "install-theia-deps",
         "install-theia",
         "cvmfs"
@@ -95,6 +96,7 @@
         "slurmclient",
         "disable-selinux",
         "install-jupyter-app-deps",
+	"install-conda",
         "install-theia-deps",
         "cvmfs"
       ]
@@ -212,10 +214,15 @@
       "script": "install-interactive-desktop-deps.sh",
       "tag": "install-interactive-desktop-deps",
       "sudo": true
-    },
+    }, 
     {
       "script": "install-jupyter-app-deps.sh",
       "tag": "install-jupyter-app-deps",
+      "sudo": true
+    },
+    {
+      "script": "install-conda.sh",
+      "tag": "install-conda",
       "sudo": true
     },
     {
