@@ -12,31 +12,44 @@
         "type": "slurm",
         "queues": {
             "viz": {
-                "sku": "Standard_NV12",
-                "max_instances": 4
+                "skus": [
+                    "Standard_NV12"
+                ],
+                "max_instances_per_sku": 4
             },
             "interactive": {
-                "sku": "Standard_D16s_v3",
-                "max_instances": 4
+                "skus": [
+                    "Standard_D16s_v3"
+                ],
+                "max_instances_per_sku": 4
             },
             "compute": {
-                "sku": "Standard_HC44rs",
-                "max_instances": 32
+                "sku": [
+                    "Standard_HC44rs",
+                    "Standard_HB60rs"
+                ],
+                "max_instances_per_sku": 32
             }
         }
     },
     "apps": {
         "desktop": {
             "queue": "viz",
-            "ncpus": 12
+            "sku": "Standard_NV12",
+            "ncpus": 12,
+            "mem": 20480
         },
         "jupyter": {
             "queue": "interactive",
-            "ncpus": 4
+            "sku": "Standard_D16s_v3",
+            "ncpus": 4,
+            "mem": 20480
         },
         "theia": {
             "queue": "interactive",
-            "ncpus": 4
+            "sku": "Standard_D16s_v3",
+            "ncpus": 4,
+            "mem": 20480
         }
     }
 }
