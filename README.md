@@ -26,10 +26,11 @@ Check out this repository
 Initialise a project from the feature-test example:
 
     password=SET-TOP-SECRET-PASSWORD
+    grafana_pwd=SET-TOP-SECRET-PASSWORD
     azhpc-init \
         -c Azure-OnDemand/azhpc-slurm \
         -d slurm-azure-ondemand \
-        --vars ood_password="$password",resource_group=${USER}-azure-ondemand
+        --vars ood_password="$password",grafana_pwd="$grafana_pwd",resource_group=${USER}-azure-ondemand
 
 This will create a new project in the `ood` directory that is ready to deploy.  Run the following to build (although feel free to adjust any of the variables in your config.json for you own setup, e.g. max instances, vm type, location etc):
 
