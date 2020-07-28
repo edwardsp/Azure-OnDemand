@@ -168,7 +168,7 @@ cat <<EOF >>/etc/ood/config/nginx_stage.yml
 
 pun_custom_env:
   OOD_DASHBOARD_TITLE: "Azure OnDemand"
-  OOD_DASHBOARD_LOGO: "/public/logo.svg"
+  OOD_DASHBOARD_LOGO: "/public/logo.png"
   OOD_BRAND_BG_COLOR: "#0078d4"
   OOD_BRAND_LINK_ACTIVE_BG_COLOR: "#fff"
   OOD_JOB_NAME_ILLEGAL_CHARS: "/"
