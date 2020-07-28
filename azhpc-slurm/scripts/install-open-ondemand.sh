@@ -168,13 +168,14 @@ cat <<EOF >>/etc/ood/config/nginx_stage.yml
 
 pun_custom_env:
   OOD_DASHBOARD_TITLE: "Azure OnDemand"
+  OOD_DASHBOARD_LOGO: "/public/logo.svg"
   OOD_BRAND_BG_COLOR: "#0078d4"
   OOD_BRAND_LINK_ACTIVE_BG_COLOR: "#fff"
   OOD_JOB_NAME_ILLEGAL_CHARS: "/"
 EOF
 
 
-git clone -b feature/rebrand https://github.com/edwardsp/Azure-OnDemand.git
+git clone https://github.com/edwardsp/Azure-OnDemand.git
 mv Azure-OnDemand/apps/theia /var/www/ood/apps/sys/.
 cat <<EOF >/var/www/ood/apps/sys/theia/form.yml
 ---
@@ -203,6 +204,7 @@ EOF
 
 # Stage web resources for OOD UI customization
 rsync -avuz Azure-OnDemand/ood/web/ /var/www/ood/public/
+cp Azure-OnDemand/ood/dashboard.yml /var/www/ood/apps/sys/dashboard/config/locales/en.yml
 
 rm -rf Azure-OnDemand
 
