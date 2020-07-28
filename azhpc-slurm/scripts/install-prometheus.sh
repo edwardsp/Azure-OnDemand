@@ -40,6 +40,7 @@ cp -r prometheuspackage/consoles /etc/prometheus
 cp -r prometheuspackage/console_libraries /etc/prometheus
 chown -R prometheus:prometheus /etc/prometheus/consoles
 chown -R prometheus:prometheus /etc/prometheus/console_libraries
+
 cat <<EOF | tee /etc/prometheus/prometheus.yml
 global:
   scrape_interval: 10s
@@ -52,6 +53,7 @@ scrape_configs:
 EOF
 
 chown prometheus:prometheus /etc/prometheus/prometheus.yml
+
 cat <<EOF | tee /etc/systemd/system/prometheus.service
 [Unit]
 Description=Prometheus
@@ -74,6 +76,7 @@ EOF
 
 systemctl daemon-reload
 systemctl start prometheus
+systemctl enable prometheus
 
 echo "Add the administrator"
 # https://grafana.com/docs/grafana/latest/administration/cli/
@@ -97,7 +100,7 @@ apiVersion: 1
 
 providers:
 - name: 'azhpc'
-  orgId: 2
+  orgId: 1
   folder: ''
   folderUid: ''
   type: file
@@ -113,7 +116,7 @@ chown root:grafana $grafana_etc_root/dashboards/azhpc.yml
 mkdir $dashboard_dir
 chown grafana:grafana $dashboard_dir
 
-cp $DIR/ondemand-clusters_rev1.json $dashboard_dir
+cp $DIR/ondemand-clusters_rev1.json $dashboard_dir/
 
 ## Enabling anonymous auth for ood dashboards:
 
@@ -121,6 +124,7 @@ sed -i 's/\[auth.anonymous\]/\[auth.anonymous\]\nenabled = true\norg_name = Azur
 sed -i 's/^;allow_embedding.*/allow_embedding = true/' /etc/grafana/grafana.ini
 
 echo "Start grafana-server"
-systemctl stop grafana-server
+#systemctl stop grafana-server
 systemctl start grafana-server
+systemctl enable grafana-server
 
