@@ -110,13 +110,13 @@ chown grafana:grafana $dashboard_dir
 cp $DIR/telegraf_dashboard.json $dashboard_dir
 
 #domain = westeurope.cloudapp.azure.com
-sed -i 's/domain =.*/domain = $REGION.cloudapp.azure.com/' /etc/grafana/grafana.ini
+sed -i 's/;domain =.*/domain = '${REGION}'.cloudapp.azure.com/' /etc/grafana/grafana.ini
 
 #root_url = %(protocol)s://%(domain)s:%(http_port)s/rnode/monitor/3000/
-sed -i 's/root_url =.*/root_url = \%\(protocol\)s\:\/\/\%\(domain\)s\:\%\(http_port\)s\/rnode\/monitor\/3000\//' /etc/grafana/grafana.ini
+sed -i 's/;root_url =.*/root_url = \%\(protocol\)s\:\/\/\%\(domain\)s\:\%\(http_port\)s\/rnode\/monitor\/3000\//' /etc/grafana/grafana.ini
 
 #serve_from_sub_path = true
-sed -i 's/serve_from_sub_path =.*/serve_from_sub_path = true/' /etc/grafana/grafana.ini
+sed -i 's/;serve_from_sub_path =.*/serve_from_sub_path = true/' /etc/grafana/grafana.ini
 
 echo "Start grafana-server"
 systemctl stop grafana-server
