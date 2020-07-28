@@ -84,12 +84,25 @@
             "sudo": true
         },
         {
+            "script": "setup-default.sh",
+            "tag": "default",
+            "sudo": true
+        },
+        {
             "script": "image-azcli.sh",
             "tag": "azcli",
             "sudo": true
         },
         {
             "script": "image-nfsclient.sh",
+            "args": [
+                "ood"
+            ],
+            "tag": "nfsclient",
+            "sudo": true
+        },
+        {
+            "script": "setup-nfsclient.sh",
             "args": [
                 "ood"
             ],
@@ -107,6 +120,14 @@
         {
             "script": "image-munge.sh",
             "tag": "munge",
+            "sudo": true
+        },
+        {
+            "script": "setup-munge.sh",
+            "tag": "munge",
+            "args": [
+                "abcdefghijklmnopqrstuvwxyz123456"
+            ],
             "sudo": true
         },
         {
@@ -130,6 +151,11 @@
             "sudo": true
         },
         {
+            "script": "setup-conda.sh",
+            "tag": "conda",
+            "sudo": true
+        },
+        {
             "script": "image-theia.sh",
             "tag": "theia",
             "sudo": true
@@ -137,6 +163,16 @@
         {
             "script": "image-cvmfs.sh",
             "tag": "cvmfs",
+            "sudo": true
+        },
+        {
+            "script": "setup-cvmfs.sh",
+            "tag": "cvmfs",
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmd.sh",
+            "tag": "slurmclient",
             "sudo": true
         },
         {

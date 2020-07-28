@@ -33,13 +33,6 @@
       "image": "image.{{variables.image_resource_group}}.{{variables.compute_image_name}}",
       "subnet": "hpc",
       "tags": [
-        "nfsclient",
-        "default",
-        "localuser",
-        "slurmpackages",
-        "munge",
-        "slurmclient",
-        "cvmfs"
       ]
     },
     "interactive": {
@@ -49,13 +42,6 @@
       "image": "image.{{variables.image_resource_group}}.{{variables.interactive_image_name}}",
       "subnet": "hpc",
       "tags": [
-        "nfsclient",
-        "default",
-        "slurmpackages",
-        "munge",
-        "slurmclient",
-        "conda",
-        "cvmfs"
       ]
     },
     "viz": {
@@ -66,51 +52,8 @@
       "image": "image.{{variables.image_resource_group}}.{{variables.viz_image_name}}",
       "subnet": "hpc",
       "tags": [
-        "nfsclient",
-        "default",
-        "slurmpackages",
-        "munge",
-        "slurmclient",
-        "cvmfs"
       ]
     }
   },
-  "install": [
-    {
-        "script": "setup-default.sh",
-        "tag": "default",
-        "sudo": true
-    },
-    {
-        "script": "setup-nfsclient.sh",
-        "args": [
-            "ood"
-        ],
-        "tag": "nfsclient",
-        "sudo": true
-    },
-    {
-        "script": "setup-munge.sh",
-        "tag": "munge",
-        "args": [
-            "abcdefghijklmnopqrstuvwxyz123456"
-        ],
-        "sudo": true
-    },
-    {
-        "script": "setup-conda.sh",
-        "tag": "conda",
-        "sudo": true
-    },
-    {
-        "script": "setup-cvmfs.sh",
-        "tag": "cvmfs",
-        "sudo": true
-    },
-    {
-        "script": "setup-slurmd.sh",
-        "tag": "slurmclient",
-        "sudo": true
-    }
-  ]
+  "install": []
 }
