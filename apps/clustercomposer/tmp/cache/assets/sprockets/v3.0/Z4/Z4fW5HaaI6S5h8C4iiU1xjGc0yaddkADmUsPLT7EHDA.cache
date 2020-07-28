@@ -1,0 +1,9 @@
+I"Œ(function() {
+  jQuery(function() {
+    return $('[data-toggle="tooltip"]').tooltip({
+      container: "body"
+    });
+  });
+
+}).call(this);
+:ET

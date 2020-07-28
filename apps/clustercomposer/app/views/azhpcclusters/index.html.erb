@@ -1,0 +1,155 @@
+<div class="page-header" xmlns="http://www.w3.org/1999/html">
+  <h2>Cluster Composer</h2>
+</div>
+
+<% if OODClusters.any? %>
+  <div class="row">
+
+    <div class="col-md-7">
+      <div cladd="panel panel-thin">
+        <div class="panel-body">
+          <div class="btn-group open">
+            <button type="button" id="new_job_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Cluster <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a data-method="post" data-toggle="tooltip" title="Create a new cluster from the default template" href="<%= create_default_path %>">From Default Template</a></li>
+              <li><a href="<%= new_from_path_path %>" data-toggle="tooltip" title="Create a new cluster from a template you choose">From Specified Path/URL</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a id="copy_button" data-toggle="tooltip" title="Copy the selected cluster" data-method="post" disabled>From Selected Template/Cluster</a></li>
+            </ul>
+          </div>
+
+          <a class="pull-right btn btn-default btn-sm btn-templates" id="template_button" data-toggle="tooltip" title="Create template from selected cluster" data-method="get" role="button" disabled>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="hidden-xs hidden-md"> Create Template</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="row">
+  <div class="col-md-7" id="joyride_start">
+    <div id="job-list-view" class="panel panel-default">
+      <div class="panel-body">
+        <a class="btn btn-default btn-sm btn-primary" id="open_dir_button" target="_blank" data-toggle="tooltip" title="Open Directory in File Manager" role="button" disabled>
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><span class="hidden-xs"> Edit Files</span>
+        </a>
+        <!-- <a class="btn btn-default btn-sm" id="view_button" data-toggle="tooltip" title="View Job" role="button" data-method="get" disabled><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> -->
+        <a class="btn btn-default btn-sm btn-primary" id="edit_button" data-toggle="tooltip" title="Change Cluster Configuration" role="button" data-method="get" disabled>
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="hidden-xs">  Cluster Options</span>
+        </a>
+        <a class="btn btn-default btn-sm btn-primary" id="terminal_button" target="_blank" data-toggle="tooltip" title="Open Selected Job in the Terminal" role="button" disabled>
+          <span class="glyphicon glyphicon-console" aria-hidden="true"></span><span class="hidden-xs"> Open Terminal</span>
+        </a>
+        <a class="btn btn-success btn-sm" id="submit_button" data-toggle="tooltip" title="Start Cluster" role="button" data-method="get" disabled>
+          <span class="glyphicon glyphicon-play" aria-hidden="true"></span><span class="hidden-xs hidden-md">  Start</span>
+        </a>
+        <a class="btn btn-default btn-sm btn-warning" id="stop_button" data-toggle="tooltip" title="Stop Cluster" role="button" data-method="get" disabled>
+          <span class="glyphicon glyphicon-stop" aria-hidden="true"></span><span class="hidden-xs hidden-md">  Stop</span>
+        </a>
+        <a class="btn btn-default btn-sm btn-warning" id="eject_button" data-toggle="tooltip" title="Cleanup Resources" role="button" data-method="get" disabled>
+          <span class="glyphicon glyphicon-eject" aria-hidden="true"></span><span class="hidden-xs hidden-md">  Eject</span>
+        </a>
+        <a class="btn btn-default btn-sm noanimate" id="loading_button" title="Loading Job Information" role="button">
+          <span class="glyphicon glyphicon-repeat fast-right-spinner" aria-hidden="true"></span>
+          <span class="hidden-xs hidden-md">  Loading</span>
+        </a>
+        <a class="btn btn-danger btn-sm pull-right" id="destroy_button" data-toggle="tooltip" title="Delete Job" data-method="get" data-confirm="Are you sure?" role="button" disabled>
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span class="hidden-xs hidden-md"> Delete</span>
+        </a>
+      </div>
+
+<a href="deadend.html">debug</a>
+      <div class="panel-body">
+        <table id="job-list-table" class="table data-table" style="width:100%; table-layout: fixed;">
+          <thead>
+          <tr>
+            <th>Created</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>ID</th>
+            <th>Cluster</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @azhpcclusters.each do |cluster| %>
+              <tr class="job-row" id="<%= cluster.id %>">
+                <td data-sort="<%= cluster.id %>"><small><%= local_time(cluster.created_at) %></small></td>
+                <td><span title="<%= cluster.name %>"><strong><%= cluster.name %></strong></span></td>
+                <td><span title="<%= cluster.sku %>"><%= cluster.sku%></span></td>
+                <td id="status_label_<%= cluster.id %>"><%= status_label(cluster) %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Joyride steps -->
+  <ol id="joyride" style="display: none;" data-joyride>
+    <li data-id="new_job_button">
+      <ol>
+        <h4>
+          Steps to create a cluster:
+        </h4>
+        <li>
+          <b>Create</b> a new cluster by copying from an existing cluster template directory or a previously run cluster directory.
+        </li>
+        <li>
+          <b>Edit</b> the files in the cluster via the file explorer.
+        </li>
+        <li>
+          <b>Create</b> the cluster and monitor the progress from the "Cluster Composer" index page.
+        </li>
+      </ol>
+    </li>
+    <li data-id="new_job_button">
+      <p>
+      1. Create: Begin by creating a new cluster from an existing template,
+      from any arbitrary path on the file system, or by copying a cluster you have
+      already created through the Cluster Composer.
+      </p>
+    </li>
+    <li data-id="open_dir_button">
+      <p>
+        2. Edit: Select a cluster and click here to open the path in the file explorer so you can edit the cluster's files.
+      </p>
+    </li>
+    <li data-id="edit_button">
+      <p>
+        2. Edit: Select an existing cluster and click here to specify the cluster's server and submit script.
+      </p>
+    </li>
+    <li data-id="terminal_button">
+      <p>
+        2. Edit: Select an existing cluster and click here to open a new terminal to the cluster path.
+      </p>
+    </li>
+    <li data-id="submit_button">
+      <p>
+        3. Submit: Select an existing cluster and click here to submit the cluster to the batch queue.
+      </p>
+    </li>
+    <li data-id="stop_button">
+      <p>
+        Select a running or queued cluster and click here to stop the cluster.
+      </p>
+    </li>
+    <li data-id="destroy_button">
+      <p>
+        Select an existing cluster and click here to remove the cluster from the list.
+      </p>
+    </li>
+    <li data-id="template_button" data-button="Close">
+      <p>
+        You can also create new cluster templates from existing clusters. This way, you can use that cluster as a template for future clusters. Select the cluster in the table to copy, then click "Create Template" to initiate the template creation process.
+      </p>
+    </li>
+  </ol>
+</div>

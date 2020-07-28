@@ -1,0 +1,8 @@
+---
+name: Azure Cluster Composer
+category: Clusters
+description: |-
+  Azure Cluster Composer helps you select the components to build your cluster on the Microsoft Azure Cloud
+#icon: fas://magic
+icon: fas://server
+
