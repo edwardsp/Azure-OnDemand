@@ -1,0 +1,92 @@
+// Load bootstrap/font-awesome sprockets first
+@import "bootstrap-sprockets";
+@import "font-awesome-sprockets";
+
+// this MUST occur before you import bootstrap
+@import "ood_appkit/bootstrap-overrides";
+
+// Load up bootstrap/font-awesome style sheet
+@import "bootstrap";
+@import "font-awesome";
+
+@import "ood_appkit";
+
+// Load up dataTables bootstrap specific styles
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
+
+// Your custom css styles below (must be manually added)
+@import "pages";
+@import "workflows";
+@import "joyride";
+
+// styles to make a logo fill the navbar height if using a logo for the navbar title
+.navbar-brand.navbar-brand-logo,
+.ood-appkit.navbar ul.navbar-breadcrumbs>li>a.navbar-brand-logo{
+  padding: 0px;
+}
+.ood-appkit.navbar ul.navbar-breadcrumbs>li>a.navbar-brand-logo{
+  margin-right: 15px;
+}
+.navbar-brand.navbar-brand-logo img{
+  height: 100%;
+}
+.navbar>.container-fluid ul.navbar-breadcrumbs .navbar-brand {
+  margin-left: 0;
+}
+// for inverse, lets make the text slightliy darker so its
+// different than the links
+.navbar.navbar-inverse .navbar-text{
+  color: #ddd;
+}
+
+.table {
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.panel-thin {
+  margin-bottom:  0 !important;
+  padding-bottom: 0 !important;
+}
+
+#error_explanation {
+  color: #a94442;
+}
+
+.glyphicon.fast-right-spinner {
+  -webkit-animation: glyphicon-spin-r 1s infinite linear;
+  animation: glyphicon-spin-r 1s infinite linear;
+}
+
+@-webkit-keyframes glyphicon-spin-r {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes glyphicon-spin-r {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.btn.noanimate:hover,
+.btn.noanimate:active,
+.btn.noanimate:focus {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}

@@ -1,0 +1,20 @@
+<%# Uses rails_bootstrap_form gem. API at: https://github.com/bootstrap-ruby/rails-bootstrap-forms %>
+
+<%= bootstrap_form_for(azhpccluster, url: create_from_path_path) do |f| %>
+    <%= f.alert_message "Please fix the errors below." %>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Cluster Definition
+      </div>
+      <div class="panel-body">
+        <%= f.text_field :name, help: "Give your cluster a name." %>
+        <%= f.text_field :config, help: "Location of your azhpc config file." %>
+      </div>
+    </div>
+
+    <%= f.submit 'Save', class: 'btn btn-primary' %>
+    <%= f.button 'Reset', type: :reset, class: 'btn btn-default' %>
+    <%#<%= link_to 'Back', azhpcclusters_path, class: 'btn btn-default' %>
+<% end %>

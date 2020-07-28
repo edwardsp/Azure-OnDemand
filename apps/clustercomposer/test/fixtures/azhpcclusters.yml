@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  status: MyString
+  sku: MyString
+  scheduler: MyString
+  arch: MyString
+  config: MyString
+  nodecount: 1
+  corecount: 1
+  description: MyText
+  created_at: 2020-07-27 11:36:01
+  updated_at: 2020-07-27 11:36:01
+
+two:
+  name: MyString
+  status: MyString
+  sku: MyString
+  scheduler: MyString
+  arch: MyString
+  config: MyString
+  nodecount: 1
+  corecount: 1
+  description: MyText
+  created_at: 2020-07-27 11:36:01
+  updated_at: 2020-07-27 11:36:01
