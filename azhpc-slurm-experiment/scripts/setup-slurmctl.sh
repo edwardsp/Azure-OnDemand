@@ -1,5 +1,5 @@
 #!/bin/bash
-
+AZHPC_CONFIG=${1-config.json}
 export SLURMUSER=900
 groupadd -g $SLURMUSER slurm
 useradd  -m -c "SLURM workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
@@ -8,15 +8,17 @@ chown slurm /var/spool/slurm
 mkdir -p /var/log/slurm
 chown slurm /var/log/slurm
 
-mkdir -p /apps/slurm
-cp /etc/slurm/slurm.conf.example /apps/slurm/slurm.conf
-ln -s /apps/slurm/slurm.conf /etc/slurm/slurm.conf
-sed -i "s/ControlMachine=.*/ControlMachine=`hostname -s`/g" /apps/slurm/slurm.conf
-sed -i "s/SlurmctldLogFile=.*/SlurmctldLogFile=\/var\/log\/slurm\/slurmctld.log/" /apps/slurm/slurm.conf
-sed -i "s/NodeName=linux.*/include \/apps\/slurm\/nodes.conf/g" /apps/slurm/slurm.conf
-echo "# NODES" > /apps/slurm/nodes.conf
-sed -i "s/PartitionName=debug.*/include \/apps\/slurm\/partition.conf/g" /apps/slurm/slurm.conf
-echo "#PARTITIONS" > /apps/slurm/partition.conf
+SLURM_SHARE=/apps/slurm
+SLURM_CONF=$SLURM_SHARE/slurm.conf
+mkdir -p $SLURM_SHARE
+cp /etc/slurm/slurm.conf.example $SLURM_CONF
+ln -s $SLURM_CONF /etc/slurm/slurm.conf
+sed -i "s/ControlMachine=.*/ControlMachine=`hostname -s`/g" $SLURM_CONF
+sed -i "s/SlurmctldLogFile=.*/SlurmctldLogFile=\/var\/log\/slurm\/slurmctld.log/" $SLURM_CONF
+sed -i "s/NodeName=linux.*/include \/apps\/slurm\/nodes.conf/g" $SLURM_CONF
+echo "# NODES" > $SLURM_SHARE/nodes.conf
+sed -i "s/PartitionName=debug.*/include \/apps\/slurm\/partition.conf/g" $SLURM_CONF
+echo "#PARTITIONS" > $SLURM_SHARE/partition.conf
 
 cat <<EOF >> /etc/slurm/slurm.conf
 
@@ -39,25 +41,25 @@ PrivateData=cloud
 
 EOF
 
-mkdir -p /apps/slurm/scripts
-chown slurm /apps/slurm/scripts
+mkdir -p $SLURM_SHARE/scripts
+chown slurm $SLURM_SHARE/scripts
 
-cp scripts/suspend.sh /apps/slurm/scripts/
-cp scripts/resume.sh /apps/slurm/scripts/
+cp scripts/suspend.sh $SLURM_SHARE/scripts/
+cp scripts/resume.sh $SLURM_SHARE/scripts/
 
-chmod +x /apps/slurm/scripts/*.sh
-ls -alh /apps/slurm/scripts
+chmod +x $SLURM_SHARE/scripts/*.sh
+ls -alh $SLURM_SHARE/scripts
 
-mkdir -p /apps/slurm/azscale/scripts
-cp scripts/$AZHPC_CONFIG /apps/slurm/azscale/config.json
-cp scripts/*_id_rsa* /apps/slurm/azscale
-chmod 600 /apps/slurm/azscale/*_id_rsa
-chmod 644 /apps/slurm/azscale/*_id_rsa.pub
-cp -r scripts /apps/slurm/azscale/.
-pushd /apps/slurm
+mkdir -p $SLURM_SHARE/azscale/scripts
+cp scripts/$AZHPC_CONFIG $SLURM_SHARE/azscale/config.json
+cp scripts/*_id_rsa* $SLURM_SHARE/azscale
+chmod 600 $SLURM_SHARE/azscale/*_id_rsa
+chmod 644 $SLURM_SHARE/azscale/*_id_rsa.pub
+cp -r scripts $SLURM_SHARE/azscale/.
+pushd $SLURM_SHARE
 git clone https://github.com/Azure/azurehpc.git
 popd
-chown slurm.slurm -R /apps/slurm
+chown slurm.slurm -R $SLURM_SHARE
 
 systemctl enable slurmctld
 

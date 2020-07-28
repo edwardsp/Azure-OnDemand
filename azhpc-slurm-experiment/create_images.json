@@ -1,0 +1,183 @@
+{
+    "location": "variables.location",
+    "resource_group": "variables.resource_group",
+    "install_from": "fqdn.ood",
+    "admin_user": "hpcadmin",
+    "variables": {
+        "image": "OpenLogic:CentOS:7.7:latest",
+        "hpc_image": "OpenLogic:CentOS-HPC:7.7:latest",
+        "interactive_vm_type": "Standard_D8s_v3",
+        "viz_vm_type": "Standard_HC44rs",
+        "compute_vm_type": "Standard_HC44rs",
+        "location": "westeurope",
+        "resource_group": "<NOT-SET>",
+        "compute_image_name": "ood-compute",
+        "interactive_image_name": "ood-interactive",
+        "viz_image_name": "ood-viz",
+        "image_resource_group": "variables.resource_group"
+    },
+    "vnet": {
+        "name": "hpcvnet",
+        "address_prefix": "10.2.0.0/20",
+        "subnets": {
+            "hpc": "10.2.0.0/22"
+        }
+    },
+    "resources": {
+        "master-compute": {
+            "type": "vm",
+            "vm_type": "variables.compute_vm_type",
+            "instances": "variables.compute_max_instances",
+            "availability_set": "compute",
+            "image": "variables.hpc_image",
+            "subnet": "hpc",
+            "tags": [
+                "nfsclient",
+                "default",
+                "localuser",
+                "slurmpackages",
+                "munge",
+                "slurmclient",
+                "cvmfs",
+                "deprovision"
+            ]
+        },
+        "master-interactive": {
+            "type": "vm",
+            "vm_type": "variables.interactive_vm_type",
+            "instances": "variables.instances",
+            "image": "variables.image",
+            "subnet": "hpc",
+            "tags": [
+                "nfsclient",
+                "default",
+                "localuser",
+                "slurmpackages",
+                "munge",
+                "slurmclient",
+                "jupyter-app",
+                "conda",
+                "theia",
+                "cvmfs",
+                "deprovision"
+            ]
+        },
+        "master-viz": {
+            "type": "slurm_partition",
+            "vm_type": "variables.viz_vm_type",
+            "instances": "variables.viz_max_instances",
+            "availability_set": "compute",
+            "image": "variables.hpc_image",
+            "subnet": "hpc",
+            "tags": [
+                "nfsclient",
+                "default",
+                "localuser",
+                "slurmpackages",
+                "munge",
+                "slurmclient",
+                "interactive-desktop",
+                "cvmfs",
+                "deprovision"
+            ]
+        }
+    },
+    "install": [
+        {
+            "script": "image-default.sh",
+            "tag": "default",
+            "sudo": true
+        },
+        {
+            "script": "image-azcli.sh",
+            "tag": "azcli",
+            "sudo": true
+        },
+        {
+            "script": "image-nfsclient.sh",
+            "args": [
+                "ood"
+            ],
+            "tag": "nfsclient",
+            "sudo": true
+        },
+        {
+            "script": "localuser.sh",
+            "args": [
+                "ood"
+            ],
+            "tag": "localuser",
+            "sudo": true
+        },
+        {
+            "script": "image-munge.sh",
+            "tag": "munge",
+            "sudo": true
+        },
+        {
+            "script": "image-slurm-packages.sh",
+            "tag": "slurmpackages",
+            "sudo": true
+        },
+        {
+            "script": "image-interactive-desktop.sh",
+            "tag": "interactive-desktop",
+            "sudo": true
+        },
+        {
+            "script": "image-jupyter-app.sh",
+            "tag": "jupyter-app",
+            "sudo": true
+        },
+        {
+            "script": "image-conda.sh",
+            "tag": "conda",
+            "sudo": true
+        },
+        {
+            "script": "image-theia.sh",
+            "tag": "theia",
+            "sudo": true
+        },
+        {
+            "script": "image-cvmfs.sh",
+            "tag": "cvmfs",
+            "sudo": true
+        },
+        {
+            "script": "deprovision.sh",
+            "tag": "deprovision",
+            "sudo": true
+        },
+        {
+            "type": "local_script",
+            "script": "create_image.sh",
+            "args": [
+               "variables.resource_group",
+               "master-compute",
+               "variables.compute_image_name",
+               "variables.image_resource_group"
+            ]
+        },
+        {
+            "type": "local_script",
+            "script": "create_image.sh",
+            "args": [
+               "variables.resource_group",
+               "master-interactive",
+               "variables.interactive_image_name",
+               "variables.image_resource_group"
+            ]
+        },
+        {
+            "type": "local_script",
+            "script": "create_image.sh",
+            "args": [
+               "variables.resource_group",
+               "master-viz",
+               "variables.viz_image_name",
+               "variables.image_resource_group"
+            ]
+        }  
+    ]
+}

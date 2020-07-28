@@ -1,12 +1,12 @@
 # install nodejs
-curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
-sudo yum install -y nodejs
+curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+yum install -y nodejs
 
 # install yarn
-curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-sudo yum -y install yarn
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
+rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+yum -y install yarn
 
 # theia dependencies
-sudo yum groupinstall -y "Development Tools"
-sudo yum install -y git libX11-devel libxkbfile-devel
+yum groupinstall -y "Development Tools"
+yum install -y git libX11-devel libxkbfile-devel

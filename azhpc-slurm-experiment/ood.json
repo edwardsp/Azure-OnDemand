@@ -11,8 +11,8 @@
         "ood_dns_name": "",
         "ood_vm_type": "Standard_D16s_v3",
         "interactive_vm_type": "Standard_D8s_v3",
-        "viz_vm_type": "Standard_HB60rs",
-        "compute_vm_type": "Standard_HB60rs",
+        "viz_vm_type": "Standard_HC44rs",
+        "compute_vm_type": "Standard_HC44rs",
         "interactive_max_instances": 2,
         "viz_max_instances": 2,
         "compute_max_instances": 2,
@@ -68,60 +68,6 @@
                 "build-theia",
                 "cvmfs"
             ]
-        },
-        "compute": {
-            "type": "slurm_partition",
-            "vm_type": "variables.compute_vm_type",
-            "instances": "variables.compute_max_instances",
-            "availability_set": "compute",
-            "image": "variables.hpc_image",
-            "subnet": "hpc",
-            "tags": [
-                "nfsclient",
-                "default",
-                "localuser",
-                "slurmpackages",
-                "munge",
-                "slurmclient",
-                "cvmfs"
-            ]
-        },
-        "interactive": {
-            "type": "slurm_partition",
-            "vm_type": "variables.interactive_vm_type",
-            "instances": "variables.instances",
-            "image": "variables.image",
-            "subnet": "hpc",
-            "tags": [
-                "nfsclient",
-                "default",
-                "localuser",
-                "slurmpackages",
-                "munge",
-                "slurmclient",
-                "jupyter-app",
-                "conda",
-                "theia",
-                "cvmfs"
-            ]
-        },
-        "viz": {
-            "type": "slurm_partition",
-            "vm_type": "variables.viz_vm_type",
-            "instances": "variables.viz_max_instances",
-            "availability_set": "compute",
-            "image": "variables.hpc_image",
-            "subnet": "hpc",
-            "tags": [
-                "nfsclient",
-                "default",
-                "localuser",
-                "slurmpackages",
-                "munge",
-                "slurmclient",
-                "interactive-desktop",
-                "cvmfs"
-            ]
         }
     },
     "install": [
@@ -170,22 +116,6 @@
             "sudo": true
         },
         {
-            "script": "image-nfsclient.sh",
-            "args": [
-                "ood"
-            ],
-            "tag": "nfsclient",
-            "sudo": true
-        },
-        {
-            "script": "setup-nfsclient.sh",
-            "args": [
-                "ood"
-            ],
-            "tag": "nfsclient",
-            "sudo": true
-        },
-        {
             "script": "localuser.sh",
             "args": [
                 "ood"
@@ -214,13 +144,14 @@
         {
             "script": "setup-slurmctl.sh",
             "tag": "slurmserver",
+            "args": ["slurm_partitions.json"],
             "deps": [
-                "suspend.sh",
-                "resume.sh",
-                "hpcadmin_id_rsa",
-                "hpcadmin_id_rsa.pub",
-                "config.json"
-            ],
+              "suspend.sh",
+              "resume.sh",
+              "../hpcadmin_id_rsa",
+              "../hpcadmin_id_rsa.pub",
+              "../slurm_partitions.json"
+          ],
             "sudo": true
         },
         {
@@ -307,11 +238,6 @@
         {
             "script": "setup-cvmfs.sh",
             "tag": "cvmfs",
-            "sudo": true
-        },
-        {
-            "script": "setup-slurmd.sh",
-            "tag": "slurmclient",
             "sudo": true
         }
     ]

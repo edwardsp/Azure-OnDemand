@@ -23,4 +23,3 @@ nfs_proc=$(($cores * 4))
 replace="s/#RPCNFSDCOUNT=16/RPCNFSDCOUNT=$nfs_proc/g"
 sed -i -e "$replace" /etc/sysconfig/nfs
 grep RPCNFSDCOUNT /etc/sysconfig/nfs
-
