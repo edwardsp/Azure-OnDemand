@@ -31,7 +31,7 @@
       "type": "vm",
       "public_ip": "true",
       "dns_name": "variables.ood_dns_name",
-      "nsg_allow": ["ssh", "http"],
+      "nsg_allow": ["ssh", "http", "https"],
       "vm_type": "variables.ood_vm_type",
       "image": "variables.image",
       "accelerated_networking": "true",

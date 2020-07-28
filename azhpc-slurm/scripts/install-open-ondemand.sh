@@ -15,6 +15,14 @@ systemctl start httpd24-httpd
 
 scl enable ondemand -- htpasswd -b -c /opt/rh/httpd24/root/etc/httpd/.htpasswd $username $password
 
+# add self signed https certificate
+cat <<EOF >>/etc/ood/config/ood_portal.yml
+ssl:
+  - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
+  - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+EOF
+
+# add cluster
 mkdir -p /etc/ood/config/clusters.d
 
 cat <<EOF >/etc/ood/config/clusters.d/slurmcluster.yml
