@@ -277,18 +277,6 @@
       ]
     },
     {
-      "script": "install-prometheus.sh",
-      "tag": "install-prometheus",
-      "deps": [
-        "ondemand-clusters_rev1.json"
-      ],
-      "sudo": true,
-      "args": [
-        "variables.grafana_user",
-        "variables.grafana_pwd"
-      ]
-    },
-    {
       "script": "install-telegraf.sh",
       "tag": "install-telegraf",
       "sudo": true,

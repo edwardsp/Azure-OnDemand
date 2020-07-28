@@ -39,7 +39,8 @@ This will create a new project in the `ood` directory that is ready to deploy.  
 
 Once built you can access the ood VM in the browser on port 80.
 
-Note: to get the FQDN you can just run `azhpc-connect [ood|monitor]` and it will be output to the screen.
+Note: to get the FQDN you can just run `azhpc-connect ood` and it will be output to the screen.
+Note: The monitoring interface will be available by browing : http://ondemand_url/rnode/monitor/3000/
 
 ## Feature-test example
 
