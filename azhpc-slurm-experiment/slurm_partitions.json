@@ -1,7 +1,7 @@
 {
   "location": "variables.location",
   "resource_group": "variables.resource_group",
-  "install_from": "fqdn.ood",
+  "install_from": "",
   "admin_user": "hpcadmin",
   "variables": {
     "interactive_vm_type": "Standard_D8s_v3",
