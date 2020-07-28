@@ -6,6 +6,7 @@
     "variables": {
         "image": "OpenLogic:CentOS:7.7:latest",
         "hpc_image": "OpenLogic:CentOS-HPC:7.7:latest",
+        "cc_storage_account": "azurehpcondemand",
         "ood_user": "hpcuser",
         "ood_password": "<NOT-SET>",
         "ood_dns_name": "",
@@ -53,7 +54,9 @@
                 "default",
                 "munge",
                 "azcli",
+                "azcopy",
                 "nfsserver",
+                "cyclecloud8",
                 "slurmpackages",
                 "slurmserver",
                 "localuser",
@@ -138,6 +141,28 @@
         {
             "script": "image-azcli.sh",
             "tag": "azcli",
+            "sudo": true
+        },
+        {
+            "script": "image-azcopy.sh",
+            "tag": "azcopy",
+            "sudo": true
+        },
+        {
+            "script": "image-cyclecloud8.sh",
+            "tag": "cyclecloud8",
+            "sudo": true
+        },
+        {
+            "script": "setup-cyclecloud8.sh",
+            "tag": "cyclecloud8",
+            "args": [
+                "variables.resource_group",
+                "variables.location",
+                "variables.cc_storage_account",
+                "variables.ood_user",
+                "variables.ood_password"
+            ],
             "sudo": true
         },
         {
