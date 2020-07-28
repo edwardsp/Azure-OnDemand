@@ -30,8 +30,8 @@ mkdir /etc/prometheus
 mkdir /mnt/resource/prometheus
 chown prometheus:prometheus /etc/prometheus
 chown prometheus:prometheus /mnt/resource/prometheus
-tar -xvzf prometheus-2.8.1.linux-amd64.tar.gz
-mv prometheus-2.8.1.linux-amd64 prometheuspackage
+tar -xvzf prometheus-2.*.linux-amd64.tar.gz
+mv prometheus-2.*linux-amd64 prometheuspackage
 cp prometheuspackage/prometheus /usr/local/bin/
 cp prometheuspackage/promtool /usr/local/bin/
 chown prometheus:prometheus /usr/local/bin/prometheus
@@ -81,22 +81,22 @@ grafana-cli admin reset-admin-password "$GRAFANA_PWD"
 
 grafana_etc_root=/etc/grafana/provisioning
 dashboard_dir=/var/lib/grafana/dashboards
-cat <<EOF > $grafana_etc_root/datasources/azhpcprometheus.yml
+cat <<EOF > $grafana_etc_root/datasources/azhpc.yml
 apiVersion: 1
 
 datasources:
-  - name: prometheus
+  - name: Prometheus
     type: prometheus
     access: proxy
     url: http://localhost:9090
 EOF
-chown root:grafana $grafana_etc_root/datasources/azhpcprometheus.yml
+chown root:grafana $grafana_etc_root/datasources/azhpc.yml
 
-cat <<EOF > $grafana_etc_root/dashboards/azhpcprometheus.yml
+cat <<EOF > $grafana_etc_root/dashboards/azhpc.yml
 apiVersion: 1
 
 providers:
-- name: 'azhpcprometheus'
+- name: 'azhpc'
   orgId: 2
   folder: ''
   folderUid: ''
@@ -108,7 +108,7 @@ providers:
     path: $dashboard_dir
 EOF
 
-chown root:grafana $grafana_etc_root/dashboards/azhpcprometheus.yml
+chown root:grafana $grafana_etc_root/dashboards/azhpc.yml
 
 mkdir $dashboard_dir
 chown grafana:grafana $dashboard_dir
