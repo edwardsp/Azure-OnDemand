@@ -1,0 +1,244 @@
+{
+    "location": "variables.location",
+    "resource_group": "variables.resource_group",
+    "install_from": "ood",
+    "admin_user": "hpcadmin",
+    "variables": {
+        "image": "OpenLogic:CentOS:7.7:latest",
+        "hpc_image": "OpenLogic:CentOS-HPC:7.7:latest",
+        "ood_user": "hpcuser",
+        "ood_password": "<NOT-SET>",
+        "ood_dns_name": "",
+        "ood_vm_type": "Standard_D16s_v3",
+        "interactive_vm_type": "Standard_D8s_v3",
+        "viz_vm_type": "Standard_HC44rs",
+        "compute_vm_type": "Standard_HC44rs",
+        "interactive_max_instances": 2,
+        "viz_max_instances": 2,
+        "compute_max_instances": 2,
+        "location": "westeurope",
+        "resource_group": "<NOT-SET>"
+    },
+    "vnet": {
+        "name": "hpcvnet",
+        "address_prefix": "10.2.0.0/20",
+        "subnets": {
+            "hpc": "10.2.0.0/22"
+        }
+    },
+    "resources": {
+        "ood": {
+            "type": "vm",
+            "public_ip": "true",
+            "dns_name": "variables.ood_dns_name",
+            "nsg_allow": [
+                "ssh",
+                "http",
+                "https"
+            ],
+            "vm_type": "variables.ood_vm_type",
+            "image": "variables.image",
+            "accelerated_networking": "true",
+            "managed_identity": {
+                "role": "contributor",
+                "scope": "resource_group"
+            },
+            "data_disks": [
+                1024,
+                1024
+            ],
+            "storage_sku": "Premium_LRS",
+            "subnet": "hpc",
+            "tags": [
+                "default",
+                "munge",
+                "azcli",
+                "nfsserver",
+                "slurmpackages",
+                "slurmserver",
+                "localuser",
+                "add_compute_partition",
+                "add_viz_partition",
+                "add_interactive_partition",
+                "open-ondemand",
+                "interactive-desktop",
+                "jupyter-app",
+                "conda",
+                "theia",
+                "build-theia",
+                "cvmfs"
+            ]
+        }
+    },
+    "install": [
+        {
+            "script": "image-default.sh",
+            "tag": "default",
+            "sudo": true
+        },
+        {
+            "script": "setup-default.sh",
+            "tag": "default",
+            "sudo": true
+        },
+        {
+            "script": "image-azcli.sh",
+            "tag": "azcli",
+            "sudo": true
+        },
+        {
+            "script": "setup-raid0.sh",
+            "tag": "nfsserver",
+            "args": [
+                "/dev/md10",
+                "/dev/sd[c-h]"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "setup-filesystem.sh",
+            "tag": "nfsserver",
+            "args": [
+                "/dev/md10",
+                "xfs", 
+                "/share"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "image-nfsserver.sh",
+            "tag": "nfsserver",
+            "sudo": true
+        },
+        {
+            "script": "setup-nfsserver.sh",
+            "tag": "nfsserver",
+            "sudo": true
+        },
+        {
+            "script": "localuser.sh",
+            "args": [
+                "ood"
+            ],
+            "tag": "localuser",
+            "sudo": true
+        },
+        {
+            "script": "image-munge.sh",
+            "tag": "munge",
+            "sudo": true
+        },
+        {
+            "script": "setup-munge.sh",
+            "tag": "munge",
+            "args": [
+                "abcdefghijklmnopqrstuvwxyz123456"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "image-slurm-packages.sh",
+            "tag": "slurmpackages",
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmctl.sh",
+            "tag": "slurmserver",
+            "args": ["slurm_partitions.json"],
+            "deps": [
+              "suspend.sh",
+              "resume.sh",
+              "../hpcadmin_id_rsa",
+              "../hpcadmin_id_rsa.pub",
+              "../slurm_partitions.json"
+          ],
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmpartition.sh",
+            "tag": "add_compute_partition",
+            "args": [
+                "compute",
+                "variables.compute_max_instances",
+                "variables.compute_vm_type",
+                "variables.location"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmpartition.sh",
+            "tag": "add_viz_partition",
+            "args": [
+                "viz",
+                "variables.viz_max_instances",
+                "variables.viz_vm_type",
+                "variables.location"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmpartition.sh",
+            "tag": "add_interactive_partition",
+            "args": [
+                "interactive",
+                "variables.interactive_max_instances",
+                "variables.interactive_vm_type",
+                "variables.location"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "image-interactive-desktop.sh",
+            "tag": "interactive-desktop",
+            "sudo": true
+        },
+        {
+            "script": "image-jupyter-app.sh",
+            "tag": "jupyter-app",
+            "sudo": true
+        },
+        {
+            "script": "image-conda.sh",
+            "tag": "conda",
+            "sudo": true
+        },
+        {
+            "script": "setup-conda.sh",
+            "tag": "conda",
+            "sudo": true
+        },
+        {
+            "script": "image-theia.sh",
+            "tag": "theia",
+            "sudo": true
+        },
+        {
+            "script": "setup-build-theia.sh",
+            "tag": "build-theia"
+        },
+        {
+            "script": "image-open-ondemand.sh",
+            "tag": "open-ondemand",
+            "sudo": true
+        },
+        {
+            "script": "setup-open-ondemand.sh",
+            "tag": "open-ondemand",
+            "sudo": true,
+            "args": [
+                "variables.ood_user",
+                "variables.ood_password"
+            ]
+        },
+        {
+            "script": "image-cvmfs.sh",
+            "tag": "cvmfs",
+            "sudo": true
+        },
+        {
+            "script": "setup-cvmfs.sh",
+            "tag": "cvmfs",
+            "sudo": true
+        }
+    ]
+}

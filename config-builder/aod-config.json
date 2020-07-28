@@ -1,0 +1,55 @@
+{
+    "region": "westeurope",
+    "auth": {
+        "type": "local",
+        "users": {
+            "hpcuser" : {
+                "sudo": true
+            }
+        }
+    },
+    "scheduler": {
+        "type": "slurm",
+        "queues": {
+            "viz": {
+                "skus": [
+                    "Standard_NV12"
+                ],
+                "max_instances_per_sku": 4
+            },
+            "interactive": {
+                "skus": [
+                    "Standard_D16s_v3"
+                ],
+                "max_instances_per_sku": 4
+            },
+            "compute": {
+                "sku": [
+                    "Standard_HC44rs",
+                    "Standard_HB60rs"
+                ],
+                "max_instances_per_sku": 32
+            }
+        }
+    },
+    "apps": {
+        "desktop": {
+            "queue": "viz",
+            "sku": "Standard_NV12",
+            "ncpus": 12,
+            "mem": 20480
+        },
+        "jupyter": {
+            "queue": "interactive",
+            "sku": "Standard_D16s_v3",
+            "ncpus": 4,
+            "mem": 20480
+        },
+        "theia": {
+            "queue": "interactive",
+            "sku": "Standard_D16s_v3",
+            "ncpus": 4,
+            "mem": 20480
+        }
+    }
+}

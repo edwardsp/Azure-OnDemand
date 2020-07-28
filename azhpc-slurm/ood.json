@@ -5,7 +5,6 @@
   "admin_user": "hpcadmin",
   "variables": {
     "image": "OpenLogic:CentOS:7.7:latest",
-    "hpc_image": "OpenLogic:CentOS-HPC:7.7:latest",
     "ood_user": "hpcuser",
     "ood_password": "<NOT-SET>",
     "ood_dns_name": "",
@@ -31,7 +30,7 @@
       "type": "vm",
       "public_ip": "true",
       "dns_name": "variables.ood_dns_name",
-      "nsg_allow": ["ssh", "http", "https"],
+      "nsg_allow": ["ssh", "http"],
       "vm_type": "variables.ood_vm_type",
       "image": "variables.image",
       "accelerated_networking": "true",
@@ -56,67 +55,9 @@
         "add_compute_partition",
         "add_viz_partition",
         "add_interactive_partition",
-        "open-ondemand",
-        "install-interactive-desktop-deps",
-        "install-jupyter-app-deps",
-	"install-conda",
         "install-theia-deps",
         "install-theia",
-        "cvmfs"
-      ]
-    },
-    "compute": {
-      "type": "slurm_partition",
-      "vm_type": "variables.compute_vm_type",
-      "instances": "variables.compute_max_instances",
-      "availability_set": "compute",
-      "image": "variables.hpc_image",
-      "subnet": "hpc",
-      "tags": [
-        "nfsclient",
-        "cndefault",
-        "localuser",
-        "munge",
-        "slurmclient",
-        "disable-selinux",
-        "cvmfs"
-      ]
-    },
-    "interactive": {
-      "type": "slurm_partition",
-      "vm_type": "variables.interactive_vm_type",
-      "instances": "variables.instances",
-      "image": "variables.image",
-      "subnet": "hpc",
-      "tags": [
-        "nfsclient",
-        "cndefault",
-        "localuser",
-        "munge",
-        "slurmclient",
-        "disable-selinux",
-        "install-jupyter-app-deps",
-	"install-conda",
-        "install-theia-deps",
-        "cvmfs"
-      ]
-    },
-    "viz": {
-      "type": "slurm_partition",
-      "vm_type": "variables.viz_vm_type",
-      "instances": "variables.viz_max_instances",
-      "availability_set": "compute",
-      "image": "variables.hpc_image",
-      "subnet": "hpc",
-      "tags": [
-        "nfsclient",
-        "cndefault",
-        "localuser",
-        "munge",
-        "slurmclient",
-        "disable-selinux",
-        "install-interactive-desktop-deps",
-        "cvmfs"
+        "open-ondemand"
       ]
     }
   },
@@ -142,14 +83,6 @@
       "sudo": true
     },
     {
-      "script": "nfsclient.sh",
-      "args": [
-        "ood"
-      ],
-      "tag": "nfsclient",
-      "sudo": true
-    },
-    {
       "script": "localuser.sh",
       "args": [
         "ood"
@@ -168,6 +101,7 @@
     {
       "script": "slurmctl.sh",
       "tag": "slurmserver",
+      "args": ["slurm_partitions.json"],
       "deps": [
         "suspend.sh",
         "resume.sh",
@@ -211,21 +145,6 @@
       "sudo": true
     },
     {
-      "script": "install-interactive-desktop-deps.sh",
-      "tag": "install-interactive-desktop-deps",
-      "sudo": true
-    }, 
-    {
-      "script": "install-jupyter-app-deps.sh",
-      "tag": "install-jupyter-app-deps",
-      "sudo": true
-    },
-    {
-      "script": "install-conda.sh",
-      "tag": "install-conda",
-      "sudo": true
-    },
-    {
       "script": "install-theia-deps.sh",
       "tag": "install-theia-deps",
       "sudo": true
@@ -242,16 +161,6 @@
         "variables.ood_user",
         "variables.ood_password"
       ]
-    },
-    {
-      "script": "slurmd.sh",
-      "tag": "slurmclient",
-      "sudo": true
-    },
-    {
-      "script": "cvmfs-azure.demo.sh",
-      "tag": "cvmfs",
-      "sudo": true
     }
   ]
 }
