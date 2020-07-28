@@ -300,12 +300,12 @@
             ]
         },
         {
-            "script": "cvmfs-image.sh",
+            "script": "image-cvmfs.sh",
             "tag": "cvmfs",
             "sudo": true
         },
         {
-            "script": "cvmfs-setup.sh",
+            "script": "setup-cvmfs.sh",
             "tag": "cvmfs",
             "sudo": true
         },

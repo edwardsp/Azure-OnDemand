@@ -9,7 +9,7 @@ sed -i 's/SELINUX=.*$/SELINUX=disabled/g' /etc/selinux/config
 
 # install packages
 yum -y install epel-release
-yum -y install git jq htop screen
+yum -y install git jq htop screen wget
 
 
 
