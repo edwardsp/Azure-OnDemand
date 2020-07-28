@@ -27,8 +27,6 @@
         "master-compute": {
             "type": "vm",
             "vm_type": "variables.compute_vm_type",
-            "instances": "variables.compute_max_instances",
-            "availability_set": "compute",
             "image": "variables.hpc_image",
             "subnet": "hpc",
             "tags": [
@@ -45,7 +43,6 @@
         "master-interactive": {
             "type": "vm",
             "vm_type": "variables.interactive_vm_type",
-            "instances": "variables.instances",
             "image": "variables.image",
             "subnet": "hpc",
             "tags": [
@@ -63,10 +60,8 @@
             ]
         },
         "master-viz": {
-            "type": "slurm_partition",
+            "type": "vm",
             "vm_type": "variables.viz_vm_type",
-            "instances": "variables.viz_max_instances",
-            "availability_set": "compute",
             "image": "variables.hpc_image",
             "subnet": "hpc",
             "tags": [
