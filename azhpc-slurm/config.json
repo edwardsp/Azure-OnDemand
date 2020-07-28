@@ -131,7 +131,7 @@
       "storage_sku": "Premium_LRS",
       "subnet": "hpc",
       "tags": [
-        "install-grafana"
+        "install-prometheus"
       ]
     }
   },
@@ -272,8 +272,19 @@
       "sudo": true,
       "args": [
         "variables.grafana_user",
-        "variables.grafana_pwd",
-        "variables.resource_group"
+        "variables.grafana_pwd"
+      ]
+    },
+    {
+      "script": "install-prometheus.sh",
+      "tag": "install-prometheus",
+      "deps": [
+        "ondemand-clusters_rev1.json"
+      ],
+      "sudo": true,
+      "args": [
+        "variables.grafana_user",
+        "variables.grafana_pwd"
       ]
     },
     {
