@@ -1,32 +1,51 @@
 #!/bin/bash
 
+compiled_package=${1-none}
+
 apps_dir=/apps
 
-git clone https://github.com/eclipse-theia/theia.git
+if wget -q --method=HEAD $compile_package; then
 
-pushd theia
+    cd /tmp
+    wget $compiled_package
+    tar zxvf theia.tgz
+    sudo mv theia /apps/.
+    rm theia.tgz
 
-cp -r examples/browser examples/azure-ondemand
-sed -i 's/example-browser/azure-ondemand/g;s/Theia Browser Example/Azure OnDemand Theia IDE/g;s/^.*api-sample.*$//g' examples/azure-ondemand/package.json
+else
 
-yarn
+    git clone https://github.com/eclipse-theia/theia.git
 
-pushd examples/azure-ondemand
-yarn build
-popd
+    pushd theia
 
-cat <<EOF >launch.sh
+    cp -r examples/browser examples/azure-ondemand
+    sed -i 's/example-browser/azure-ondemand/g;s/Theia Browser Example/Azure OnDemand Theia IDE/g;s/^.*api-sample.*$//g' examples/azure-ondemand/package.json
+
+    yarn
+
+    pushd examples/azure-ondemand
+    yarn build
+    popd
+
+    cat <<EOF >launch.sh
 #!/bin/bash
 
 port=\$1
 workspace=\$2
 
+# remove slurm environment vars
+for i in \$(env | grep -i slurm | cut -d= -f1); 
+    do unset \$i
+done
+
 cd $apps_dir/theia/examples/azure-ondemand
 export THEIA_DEFAULT_PLUGINS=local-dir:$apps_dir/theia/plugins
 yarn run start --hostname \$HOSTNAME --port \$port "\$workspace"
 EOF
-chmod +x launch.sh
+    chmod +x launch.sh
 
-popd
+    popd
 
-sudo mv theia /apps/.
+    sudo mv theia /apps/.
+
+fi
