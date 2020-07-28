@@ -54,6 +54,7 @@
                 "munge",
                 "azcli",
                 "nfsserver",
+                "slurmpackages",
                 "slurmserver",
                 "localuser",
                 "add_compute_partition",
@@ -79,6 +80,7 @@
                 "nfsclient",
                 "default",
                 "localuser",
+                "slurmpackages",
                 "munge",
                 "slurmclient",
                 "cvmfs"
@@ -94,6 +96,7 @@
                 "nfsclient",
                 "default",
                 "localuser",
+                "slurmpackages",
                 "munge",
                 "slurmclient",
                 "jupyter-app",
@@ -113,6 +116,7 @@
                 "nfsclient",
                 "default",
                 "localuser",
+                "slurmpackages",
                 "munge",
                 "slurmclient",
                 "interactive-desktop",
@@ -203,7 +207,12 @@
             "sudo": true
         },
         {
-            "script": "slurmctl.sh",
+            "script": "image-slurm-packages.sh",
+            "tag": "slurmpackages",
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmctl.sh",
             "tag": "slurmserver",
             "deps": [
                 "suspend.sh",
@@ -215,7 +224,7 @@
             "sudo": true
         },
         {
-            "script": "slurmpartition.sh",
+            "script": "setup-slurmpartition.sh",
             "tag": "add_compute_partition",
             "args": [
                 "compute",
@@ -226,7 +235,7 @@
             "sudo": true
         },
         {
-            "script": "slurmpartition.sh",
+            "script": "setup-slurmpartition.sh",
             "tag": "add_viz_partition",
             "args": [
                 "viz",
@@ -237,7 +246,7 @@
             "sudo": true
         },
         {
-            "script": "slurmpartition.sh",
+            "script": "setup-slurmpartition.sh",
             "tag": "add_interactive_partition",
             "args": [
                 "interactive",
@@ -291,13 +300,18 @@
             ]
         },
         {
-            "script": "slurmd.sh",
-            "tag": "slurmclient",
+            "script": "cvmfs-image.sh",
+            "tag": "cvmfs",
             "sudo": true
         },
         {
-            "script": "cvmfs-azure.demo.sh",
+            "script": "cvmfs-setup.sh",
             "tag": "cvmfs",
+            "sudo": true
+        },
+        {
+            "script": "setup-slurmd.sh",
+            "tag": "slurmclient",
             "sudo": true
         }
     ]

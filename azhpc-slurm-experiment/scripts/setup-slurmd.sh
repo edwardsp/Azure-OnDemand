@@ -1,8 +1,6 @@
 #!/bin/bash
 
-yum install -y /apps/rpms/slurm-*
-
-export SLURMUSER=1002
+export SLURMUSER=900
 groupadd -g $SLURMUSER slurm
 useradd  -m -c "SLURM workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
 

@@ -1,22 +1,6 @@
 #!/bin/bash
-AZHPC_CONFIG=${1-config.json}
-yum install -y epel-release screen
 
-yum install perl-ExtUtils-MakeMaker gcc mariadb-devel openssl openssl-devel pam-devel rpm-build numactl numactl-devel hwloc hwloc-devel lua lua-devel readline-devel rrdtool-devel ncurses-devel man2html libibmad libibumad -y
-
-if [ ! -f "slurm-19.05.5.tar.bz2" ]; then
-  wget https://download.schedmd.com/slurm/slurm-19.05.5.tar.bz2
-fi
-
-if [ ! -f "/apps/rpms/slurm*.rpm" ]; then
-  rpmbuild -ta slurm-19.05.5.tar.bz2
-  mkdir -p /apps/rpms
-  cp /root/rpmbuild/RPMS/x86_64/slurm-* /apps/rpms/
-fi
-
-yum install -y /apps/rpms/slurm-*
-
-export SLURMUSER=1002
+export SLURMUSER=900
 groupadd -g $SLURMUSER slurm
 useradd  -m -c "SLURM workload manager" -d /var/lib/slurm -u $SLURMUSER -g slurm  -s /bin/bash slurm
 mkdir -p /var/spool/slurm
