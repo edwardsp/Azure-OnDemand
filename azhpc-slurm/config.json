@@ -272,7 +272,8 @@
       "sudo": true,
       "args": [
         "variables.grafana_user",
-        "variables.grafana_pwd"
+        "variables.grafana_pwd",
+        "variables.location"
       ]
     },
     {
