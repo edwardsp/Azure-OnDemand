@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+set -e
 
 RESOURCE_GROUP=$1
 if [ -z "${RESOURCE_GROUP}" ]; then
@@ -105,7 +107,7 @@ fi
 
 # Configure the CLI for root as the initial user
 /usr/bin/sleep 5
-/usr/local/bin/cyclecloud initialize --batch --url="https://localhost" --verify-ssl="false" \
+sudo /usr/local/bin/cyclecloud initialize --batch --url="https://localhost" --verify-ssl="false" \
                                      --username="${INITIAL_USER_NAME}" --password="${INITIAL_USER_PASSWORD}"
 
 # Configure the initial subscription
@@ -113,10 +115,10 @@ cat <<EOF > /tmp/azure_data.json
 {
     "Environment": "$AZURE_CLOUD",
     "AzureRMUseManagedIdentity": true,
-    "AzureResourceGroup": ${RESOURCE_GROUP},
-    "AzureRMSubscriptionId": ${SUBSCRIPTION_ID},
+    "AzureResourceGroup": "${RESOURCE_GROUP}",
+    "AzureRMSubscriptionId": "${SUBSCRIPTION_ID}",
     "DefaultAccount": true,
-    "Location": ${LOCATION},
+    "Location": "${LOCATION}",
     "Name": "azure",
     "Provider": "azure",
     "ProviderId": "${SUBSCRIPTION_ID}",
@@ -124,5 +126,5 @@ cat <<EOF > /tmp/azure_data.json
     "RMStorageContainer": "cyclecloud"
 }
 EOF
-/usr/local/bin/cyclecloud account create -f /tmp/azure_data.json
+sudo /usr/local/bin/cyclecloud account create -f /tmp/azure_data.json
 
