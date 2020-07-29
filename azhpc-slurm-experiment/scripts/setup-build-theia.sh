@@ -34,7 +34,7 @@ port=\$1
 workspace=\$2
 
 # remove slurm environment vars
-for i in \$(env | grep -i slurm | cut -d= -f1); 
+for i in \$(env | grep SLURM_ | cut -d= -f1); 
     do unset \$i
 done
 

@@ -38,6 +38,7 @@ SlurmctldParameters=cloud_dns,idle_on_node_suspend
 CommunicationParameters=NoAddrCache
 DebugFlags=PowerSave
 PrivateData=cloud
+PropagateResourceLimits=NONE
 
 EOF
 
