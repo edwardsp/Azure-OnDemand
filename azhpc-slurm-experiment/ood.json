@@ -232,7 +232,8 @@
             "sudo": true,
             "args": [
                 "variables.ood_user",
-                "variables.ood_password"
+                "variables.ood_password",
+                "fqdn.ood"
             ]
         },
         {

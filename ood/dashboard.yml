@@ -48,7 +48,7 @@ en:
     welcome_html: |
       <div style="max-width: 600px">%{logo_img_tag}</div>
       <p class="lead">Deploy HPC resources on Azure with Open OnDemand.</p>
-      <p>[<a href="http://ood3ab951.westeurope.cloudapp.azure.com/rnode/monitor/3000/login" target="_blank">Monitoring</a>]</p>
+      <p>[<a href="MONITORING_URI" target="_blank">Monitoring</a>]</p>
 
     # General translations
     apps_setup_failure_html: |

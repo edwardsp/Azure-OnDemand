@@ -1,7 +1,7 @@
 #!/bin/bash
-
 username=$1
 password=$2
+monitoring_server=$3
 
 iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
@@ -163,7 +163,9 @@ EOF
 cat <<EOF >>/etc/ood/config/nginx_stage.yml
 
 pun_custom_env:
-  OOD_DASHBOARD_TITLE: "Azure OnDemand"
+  OOD_DASHBOARD_TITLE: "AzureHPC OnDemand"
+  OOD_DASHBOARD_LOGO: "/public/logo.png"
+  OOD_BRAND_BG_COLOR: "#0078d4"  
   OOD_BRAND_BG_COLOR: "#53565a"
   OOD_BRAND_LINK_ACTIVE_BG_COLOR: "#fff"
   OOD_JOB_NAME_ILLEGAL_CHARS: "/"
@@ -196,6 +198,16 @@ script:
     - "--cpus-per-task=2"
     - "--partition=interactive"
 EOF
+
+# Stage web resources for OOD UI customization
+rsync -avuz Azure-OnDemand/ood/web/ /var/www/ood/public/
+
+# Add the monitoring URL in the dashboard
+monitoring_url="http://${monitoring_server}:3000/login"
+sed -i "s/MONITORING_URI/$monitoring_url/g" Azure-OnDemand/ood/dashboard.yml
+
+cp Azure-OnDemand/ood/dashboard.yml /var/www/ood/apps/sys/dashboard/config/locales/en.yml
+
 rm -rf Azure-OnDemand
 
 systemctl try-restart httpd24-httpd.service httpd24-htcacheclean.service
