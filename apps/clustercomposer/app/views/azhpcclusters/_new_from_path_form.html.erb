@@ -3,18 +3,142 @@
 <%= bootstrap_form_for(azhpccluster, url: create_from_path_path) do |f| %>
     <%= f.alert_message "Please fix the errors below." %>
 
-
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
-        Cluster Definition
+         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Compute Resources 
       </div>
-      <div class="panel-body">
-        <%= f.text_field :name, help: "Give your cluster a name." %>
-        <%= f.text_field :config, help: "Location of your azhpc config file." %>
+      <!%# These values all need pulling dynamically from ratecardapi or banzaicloud %>
+      <div class="panel panel-thin">
+        <div class="panel-body">
+          <div class="btn-group">
+              <button type="button" id="sku_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span aria-hidden="true"></span>Machine Type<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class=dropdown-item>HB120rs_v2</a></li>
+                <li><a class=dropdown-item>HB60rs</a></li>
+                <li><a class=dropdown-item>HC44rs</a></li>
+              </ul>
+          </div>
+          <div class="btn-group">
+            <button type="button" id="region_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span aria-hidden="true"></span>Region<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class=dropdown-item>West Europe</a></li>
+              <li><a class=dropdown-item>East US</a></li>
+              <li><a class=dropdown-item>South Central US</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+              <button type="button" id="sku_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span aria-hidden="true"></span>Pricing Tier<span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class=dropdown-item>PayGo</a></li>
+                <li><a class=dropdown-item>Spot</a></li>
+              </ul>
+          </div>
+          <div class="form-group">
+              <label for="coreCount">Select Number of Cores: </label>
+              <input type="range" class="form-control-range" id="nodeCountInputId" value="1" min="0" max="1000" step="1" oninput="nodeCountOutputId.value = nodeCountInputId.value, coreCountOutputId.value = nodeCountInputId.value *120, ramCountOutputId.value = nodeCountInputId.value *480, flopsCountOutputId.value = nodeCountInputId.value *3.1956, costCountOutputId.value = nodeCountInputId.value *4.68">
+          </div>
+        </div>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                 <th scope="col">Machine</th>
+                 <th scope="col">Nodes</th>
+                 <th scope="col">Cores</th>
+                 <th scope="col">RAM Total (GiB)</th>
+                 <th scope="col">TFlops (RMax)</th>
+                 <th scope="col">$/hr</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>HB120rs_v2</td>
+                <td><output name="nodeCountOutputName" id="nodeCountOutputId">1</output></td>
+                <td><output name="coreCountOutputName" id="coreCountOutputId">120</output></td>
+                <td><output name="ramCountOutputName" id="ramCountOutputId">480</output></td>
+                <td><output name="flopsCountOutputName" id="flopsCountOutputId">3.1956</output></td>
+                <td><output name="costCountOutputName" id="costCountOutputId">4.68</output></td>
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-th" aria-hidden="true"></span> Software 
+        </div>
+        <div class="panel panel-default">
+          <div class="panel panel-thin">
+            <div class="panel-body">
+              <div class="btn-group">
+                <button type="button" id="sched_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span aria-hidden="true"></span>Scheduler<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class=dropdown-item>NONE</a></li>
+                  <li><a class=dropdown-item>SLURM</a></li>
+                  <li><a class=dropdown-item>PBS</a></li>
+                </ul>
+              </div>
+              <div class="btn-group">
+                <button type="button" id="os_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span aria-hidden="true"></span>Image<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class=dropdown-item>Custom</a></li>
+                  <li><a class=dropdown-item>CentOS-HPC 7.8</a></li>
+                  <li><a class=dropdown-item>CentOS-HPC 7.7</a></li>
+                </ul>
+              </div>
+              <div class="btn-group">
+                <button type="button" id="os_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span aria-hidden="true"></span>Application Stack<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class=dropdown-item>Custom</a></li>
+                  <li><a class=dropdown-item>Azure Spack</a></li>
+                  <li><a class=dropdown-item>Azure CVMFS</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> Storage 
+        </div>
+        <div class="panel panel-default">
+          <div class="panel panel-thin">
+            <div class="panel-body">
+              <div class="btn-group">
+                <button type="button" id="sched_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span aria-hidden="true"></span>Filesystem<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class=dropdown-item>NONE</a></li>
+                  <li><a class=dropdown-item>Lustre</a></li>
+                  <li><a class=dropdown-item>Azure NetApp Files</a></li>
+                  <li><a class=dropdown-item>Beegfs</a></li>
+                  <li><a class=dropdown-item>BeeOND</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 
     <%= f.submit 'Save', class: 'btn btn-primary' %>
     <%= f.button 'Reset', type: :reset, class: 'btn btn-default' %>
     <%#<%= link_to 'Back', azhpcclusters_path, class: 'btn btn-default' %>
+      <div class="panel-body">
+        <!%# <%= f.text_field :name, help: "Give your cluster a name." %>  %>
+        <!%# <%= f.text_field :config, help: "Location of your azhpc config file." %> %>
+      </div>
 <% end %>
