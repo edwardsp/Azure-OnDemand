@@ -150,6 +150,8 @@ source ~/.bashrc
 
 conda activate tensorflow_env
 
+pip install jupyter-tensorboard
+
 # Benchmark info
 echo "TIMING - Starting jupyter at: \$(date)"
 
@@ -164,7 +166,8 @@ cat <<EOF >>/etc/ood/config/nginx_stage.yml
 
 pun_custom_env:
   OOD_DASHBOARD_TITLE: "Azure OnDemand"
-  OOD_BRAND_BG_COLOR: "#53565a"
+  OOD_DASHBOARD_LOGO: "/public/logo.png"
+  OOD_BRAND_BG_COLOR: "#0078d4"
   OOD_BRAND_LINK_ACTIVE_BG_COLOR: "#fff"
   OOD_JOB_NAME_ILLEGAL_CHARS: "/"
 EOF
@@ -196,6 +199,11 @@ script:
     - "--cpus-per-task=2"
     - "--partition=interactive"
 EOF
+
+# Stage web resources for OOD UI customization
+rsync -avuz Azure-OnDemand/ood/web/ /var/www/ood/public/
+cp Azure-OnDemand/ood/dashboard.yml /var/www/ood/apps/sys/dashboard/config/locales/en.yml
+
 rm -rf Azure-OnDemand
 
 systemctl try-restart httpd24-httpd.service httpd24-htcacheclean.service
