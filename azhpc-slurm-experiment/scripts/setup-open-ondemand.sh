@@ -202,8 +202,8 @@ EOF
 # Stage web resources for OOD UI customization
 rsync -avuz Azure-OnDemand/ood/web/ /var/www/ood/public/
 
-# Add the monitoring URL in the dashboard
-monitoring_url="http://${monitoring_server}:3000/login"
+# Add the monitoring URL in the dashboard using the OOD proxy syntax
+monitoring_url="http://${monitoring_server}/rnode/$(hostname)/3000/login"
 sed -i "s|MONITORING_URI|$monitoring_url|g" Azure-OnDemand/ood/dashboard.yml
 
 cp Azure-OnDemand/ood/dashboard.yml /var/www/ood/apps/sys/dashboard/config/locales/en.yml
