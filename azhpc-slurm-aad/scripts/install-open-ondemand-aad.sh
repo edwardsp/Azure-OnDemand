@@ -3,6 +3,7 @@
 username=$1
 password=$2
 fqdn=$3
+appid=$4
 
 yum -y install centos-release-scl
 yum -y install https://yum.osc.edu/ondemand/1.7/ondemand-release-web-1.7-1.noarch.rpm
@@ -60,11 +61,12 @@ oidc_uri: '/oidc'
 ssl:
   - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
   - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+user_map_cmd: '/opt/ood/ood_auth_map/bin/ood_auth_map.regex --regex=\"^(\w+)@microsoft.com$\"'
 EOF
 sudo /opt/ood/ood-portal-generator/sbin/update_ood_portal
 cat <<EOF >/opt/rh/httpd24/root/etc/httpd/conf.d/auth_openidc.conf
 OIDCProviderMetadataURL  https://login.microsoftonline.com/microsoft.onmicrosoft.com/.well-known/openid-configuration
-OIDCClientID        "181a57a8-1bfc-4665-b019-343957a34adc"
+OIDCClientID        "${appid}"
 OIDCClientSecret    "12345654321abcdefg##"
 OIDCRedirectURI      https://${fqdn}/oidc
 OIDCCryptoPassphrase "4444444444444444444444444444444444444444"

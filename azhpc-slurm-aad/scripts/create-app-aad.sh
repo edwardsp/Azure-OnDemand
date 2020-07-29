@@ -17,4 +17,4 @@ EOF
 
 appid=`az ad app create --display-name ondemand-20200727-02 --reply-urls https://${fqdn}/oidc --credential-description "ood" --key-type Password --password "12345654321abcdefg##" --required-resource-accesses @manifest.json | jq -r .appId`
 
-echo $appid
+mv ../variables.json variables.json.old; cat variables.json.old | jq --arg appid $appid '. + {appid: $appid}' > ../variables.json

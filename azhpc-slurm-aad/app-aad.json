@@ -1,0 +1,23 @@
+{
+  "location": "variables.location",
+  "resource_group": "variables.resource_group",
+  "install_from": "",
+  "admin_user": "hpcadmin",
+  "variables": "@variables.json", 
+   "vnet": {
+        "name": "hpcvnet",
+        "address_prefix": "10.2.0.0/20",
+        "subnets": {
+            "hpc": "10.2.0.0/22"
+        }
+    },
+  "install": [
+    {
+      "script": "create-app-aad.sh",
+      "type": "local_script",
+      "args": [
+        "{{variables.ood_dns_name}}.{{variables.location}}.cloudapp.azure.com" 
+      ]
+    }
+  ]
+}
