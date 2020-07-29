@@ -6,7 +6,7 @@ Open OnDemand running on Azure
 
 These instructions will create a running setup of OOD using slurm and auto-scaling.  Features include:
 
-* PBS Cluster
+* Slurm Cluster
 * Interactive Desktop (not accelerated)
 * Jupyter
 * Theia
@@ -26,11 +26,10 @@ Check out this repository
 Initialise a project from the feature-test example:
 
     password=SET-TOP-SECRET-PASSWORD
-    grafana_pwd=SET-TOP-SECRET-PASSWORD
     azhpc-init \
         -c Azure-OnDemand/azhpc-slurm \
         -d slurm-azure-ondemand \
-        --vars ood_password="$password",grafana_pwd="$grafana_pwd",resource_group=${USER}-azure-ondemand
+        --vars ood_password="$password",resource_group=${USER}-azure-ondemand
 
 This will create a new project in the `ood` directory that is ready to deploy.  Run the following to build (although feel free to adjust any of the variables in your config.json for you own setup, e.g. max instances, vm type, location etc):
 
@@ -39,8 +38,24 @@ This will create a new project in the `ood` directory that is ready to deploy.  
 
 Once built you can access the ood VM in the browser on port 80.
 
-Note: to get the FQDN you can just run `azhpc-connect ood` and it will be output to the screen.
-Note: The monitoring interface will be available by browsing : http://ondemand_url/rnode/monitor/3000/ . Visit the Telegraf: system dashboard.
+> Note: to get the FQDN you can just run `azhpc-connect ood` and it will be output to the screen.
+
+Browse to the OOD portal with the FQDN, logon with user `hpcuser` and the password defined above
+
+### Build with images
+To speed up node provisioning custom images can be built as part of the installation and used by SLURM. To do this, run the same init command as above, but the build is now split in two steps :
+
+```
+ $ azhpc-build -c ood.json
+```
+It will take more 20+ minutes to finish.
+
+```
+ $ azhpc-build --no-vnet -c create_images.json
+```
+It will take more 23+ minutes to finish.
+
+There will be 3 images `ood-compute`, `ood-interactive` and `ood-viz` created into the resource group specified in the init command above.
 
 ## Feature-test example
 
