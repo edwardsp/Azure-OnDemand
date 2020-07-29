@@ -6,12 +6,23 @@
   <div class="row">
 
     <div class="col-md-7">
-      <div class="panel panel-thin">
+      <div cladd="panel panel-thin">
         <div class="panel-body">
           <div class="btn-group">
-            <a href="<%= new_from_path_path %>" class="btn btn-info btn-sm" id="new_cluster_button" data-toggle="tooltip" aria-haspopup="true" aria-expanded="false">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Cluster </a>
+            <button type="button" id="new_job_button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Cluster <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a data-method="post" data-toggle="tooltip" title="Create a new cluster from the default template" href="<%= create_default_path %>">From Default Template</a></li>
+              <li><a href="<%= new_from_path_path %>" data-toggle="tooltip" title="Create a new cluster from a template you choose">From Specified Path/URL</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a id="copy_button" data-toggle="tooltip" title="Copy the selected cluster" data-method="post" disabled>From Selected Template/Cluster</a></li>
+            </ul>
           </div>
+
+          <a class="pull-right btn btn-default btn-sm btn-templates" id="template_button" data-toggle="tooltip" title="Create template from selected cluster" data-method="get" role="button" disabled>
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="hidden-xs hidden-md"> Create Template</span>
+          </a>
         </div>
       </div>
     </div>
@@ -42,11 +53,14 @@
         <a class="btn btn-default btn-sm btn-warning" id="eject_button" data-toggle="tooltip" title="Cleanup Resources" role="button" data-method="get" disabled>
           <span class="glyphicon glyphicon-eject" aria-hidden="true"></span><span class="hidden-xs hidden-md">  Eject</span>
         </a>
+        <a class="btn btn-default btn-sm noanimate" id="loading_button" title="Loading Job Information" role="button">
+          <span class="glyphicon glyphicon-repeat fast-right-spinner" aria-hidden="true"></span>
+          <span class="hidden-xs hidden-md">  Loading</span>
+        </a>
         <a class="btn btn-danger btn-sm pull-right" id="destroy_button" data-toggle="tooltip" title="Delete Job" data-method="get" data-confirm="Are you sure?" role="button" disabled>
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <span class="hidden-xs hidden-md"> Delete</span>
         </a>
       </div>
-    </div>
 
 <a href="deadend.html">debug</a>
       <div class="panel-body">
@@ -95,7 +109,7 @@
         </li>
       </ol>
     </li>
-    <li data-id="new_cluster_button">
+    <li data-id="new_job_button">
       <p>
       1. Create: Begin by creating a new cluster from an existing template,
       from any arbitrary path on the file system, or by copying a cluster you have

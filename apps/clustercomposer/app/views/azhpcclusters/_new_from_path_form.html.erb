@@ -134,11 +134,14 @@
         </div>
     </div>
 
-    <%= f.submit 'Save', class: 'btn btn-primary' %>
     <%= f.button 'Reset', type: :reset, class: 'btn btn-default' %>
-    <%#<%= link_to 'Back', azhpcclusters_path, class: 'btn btn-default' %>
-      <div class="panel-body">
-        <!%# <%= f.text_field :name, help: "Give your cluster a name." %>  %>
-        <!%# <%= f.text_field :config, help: "Location of your azhpc config file." %> %>
-      </div>
+    <a class="btn btn-default btn-sm btn-primary" id="save_as_button" target="_blank" data-toggle="tooltip" title="Save As" role="button" disabled>
+          <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span><span class="hidden-xs"> Save As...</span>
+    </a>
+    <a class="btn btn-default btn-sm btn-primary" id="open_dir_button" target="_blank" data-toggle="tooltip" title="Open Directory in File Manager" role="button" disabled>
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span><span class="hidden-xs"> Edit Config</span>
+    </a>
+    <a class="btn btn-success btn-sm" id="submit_button" data-toggle="tooltip" title="Start Cluster" role="button" data-method="get" disabled>
+          <span class="glyphicon glyphicon-play" aria-hidden="true"></span><span class="hidden-xs"> Deploy to Azure</span>
+    </a>
 <% end %>
