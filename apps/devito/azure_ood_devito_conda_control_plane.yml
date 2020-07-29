@@ -1,0 +1,14 @@
+name: azure_ood_devito_control_plane_conda_env
+
+channels:
+  - anaconda
+  - conda-forge
+dependencies:
+  - python=3.7 
+  - pip
+  - nb_conda
+  - jupytext
+  - pip:
+    - python-dotenv
+    - python-dotenv[cli]
+    - papermill[azure]
