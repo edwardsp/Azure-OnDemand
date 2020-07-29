@@ -154,6 +154,8 @@ source ~/.bashrc
 
 conda activate tensorflow_env
 
+pip install jupyter-tensorboard
+
 # Benchmark info
 echo "TIMING - Starting jupyter at: \$(date)"
 
