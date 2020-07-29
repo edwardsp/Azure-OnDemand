@@ -42,6 +42,8 @@ Once built you can access the ood VM in the browser on port 80.
 
 Browse to the OOD portal with the FQDN, logon with user `hpcuser` and the password defined above
 
+> Note: to connect to the grafana monitoring page, use `admin` as a user and the password defined above
+
 ### Build with images
 To speed up node provisioning custom images can be built as part of the installation and used by SLURM. To do this, run the same init command as above, but the build is now split in two steps :
 

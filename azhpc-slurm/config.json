@@ -10,6 +10,9 @@
     "ood_password": "<NOT-SET>",
     "ood_dns_name": "",
     "ood_vm_type": "Standard_D16s_v3",
+    "grafana_user": "admin",
+    "grafana_pwd": "<NOT-SET>",
+    "grafana_vm_type": "Standard_D8s_v3",
     "interactive_vm_type": "Standard_D8s_v3",
     "viz_vm_type": "Standard_HB60rs",
     "compute_vm_type": "Standard_HB60rs",
@@ -79,7 +82,8 @@
         "munge",
         "slurmclient",
         "disable-selinux",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
       ]
     },
     "interactive": {
@@ -98,7 +102,8 @@
         "install-jupyter-app-deps",
         "install-conda",
         "install-theia-deps",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
       ]
     },
     "viz": {
@@ -116,7 +121,19 @@
         "slurmclient",
         "disable-selinux",
         "install-interactive-desktop-deps",
-        "cvmfs"
+        "cvmfs",
+        "install-telegraf"
+      ]
+    },
+    "monitor": {
+      "type": "vm",
+      "vm_type": "variables.grafana_vm_type",
+      "image": "variables.image",
+      "accelerated_networking": "true",
+      "storage_sku": "Premium_LRS",
+      "subnet": "hpc",
+      "tags": [
+        "install-grafana"
       ]
     }
   },
@@ -252,6 +269,29 @@
       "script": "cvmfs-azure.demo.sh",
       "tag": "cvmfs",
       "sudo": true
+    },
+    {
+      "script": "install-grafana.sh",
+      "tag": "install-grafana",
+      "deps": [
+        "telegraf_dashboard.json"
+      ],
+      "sudo": true,
+      "args": [
+        "variables.grafana_user",
+        "variables.grafana_pwd",
+        "variables.location"
+      ]
+    },
+    {
+      "script": "install-telegraf.sh",
+      "tag": "install-telegraf",
+      "sudo": true,
+      "args": [
+        "monitor",
+        "variables.grafana_user",
+        "variables.grafana_pwd"
+      ]
     }
   ]
 }

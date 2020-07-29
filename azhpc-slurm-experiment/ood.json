@@ -17,7 +17,10 @@
         "viz_max_instances": 2,
         "compute_max_instances": 2,
         "location": "westeurope",
-        "resource_group": "<NOT-SET>"
+        "resource_group": "<NOT-SET>",
+        "grafana_server": "ood",
+        "grafana_user": "variables.ood_user",
+        "grafana_pwd": "variables.ood_password"
     },
     "vnet": {
         "name": "hpcvnet",
@@ -66,7 +69,9 @@
                 "conda",
                 "theia",
                 "build-theia",
-                "cvmfs"
+                "cvmfs",
+                "grafana",
+                "telegraf"
             ]
         }
     },
@@ -227,7 +232,8 @@
             "sudo": true,
             "args": [
                 "variables.ood_user",
-                "variables.ood_password"
+                "variables.ood_password",
+                "fqdn.ood"
             ]
         },
         {
@@ -239,6 +245,38 @@
             "script": "setup-cvmfs.sh",
             "tag": "cvmfs",
             "sudo": true
+        },
+        {
+            "script": "image-grafana.sh",
+            "tag": "grafana",
+            "sudo": true
+        },
+        {
+            "script": "setup-grafana.sh",
+            "tag": "grafana",
+            "deps": [
+                "telegraf_dashboard.json"
+            ],
+            "sudo": true,
+            "args": [
+                "variables.grafana_user",
+                "variables.grafana_pwd"
+            ]
+        },
+        {
+            "script": "image-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true
+        },
+        {
+            "script": "setup-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true,
+            "args": [
+                "variables.grafana_server",
+                "variables.grafana_user",
+                "variables.grafana_pwd"
+            ]
         }
     ]
 }
