@@ -14,7 +14,10 @@
         "compute_image_name": "ood-compute",
         "interactive_image_name": "ood-interactive",
         "viz_image_name": "ood-viz",
-        "image_resource_group": "variables.resource_group"
+        "image_resource_group": "variables.resource_group",
+        "grafana_server": "ood",
+        "grafana_user": "variables.ood_user",
+        "grafana_pwd": "variables.ood_password"
     },
     "vnet": {
         "name": "hpcvnet",
@@ -37,6 +40,7 @@
                 "munge",
                 "slurmclient",
                 "cvmfs",
+                "telegraf",
                 "deprovision"
             ]
         },
@@ -56,6 +60,7 @@
                 "conda",
                 "theia",
                 "cvmfs",
+                "telegraf",
                 "deprovision"
             ]
         },
@@ -73,6 +78,7 @@
                 "slurmclient",
                 "interactive-desktop",
                 "cvmfs",
+                "telegraf",
                 "deprovision"
             ]
         }
@@ -174,6 +180,21 @@
             "script": "setup-slurmd.sh",
             "tag": "slurmclient",
             "sudo": true
+        },
+        {
+            "script": "image-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true
+        },
+        {
+            "script": "setup-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true,
+            "args": [
+                "variables.grafana_server",
+                "variables.grafana_user",
+                "variables.grafana_pwd"
+            ]
         },
         {
             "script": "deprovision.sh",
