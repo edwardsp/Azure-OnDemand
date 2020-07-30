@@ -51,6 +51,19 @@ CYCLECLOUD_HTTPS_PORT=8443
 iptables -I INPUT -p tcp -m tcp --dport ${CYCLECLOUD_HTTPS_PORT} -j ACCEPT
 iptables-save > /etc/sysconfig/iptables
 
+
+echo "Open port $port for CycleCloud"
+az login -i
+az network nsg rule create \
+    -g ${RESOURCE_GROUP} \
+    --nsg-name "$( hostname )_nsg" \
+    --name cyclehttps \
+    --priority 2000 \
+    --protocol Tcp \
+    --destination-port-ranges ${CYCLECLOUD_HTTPS_PORT} \
+    --output table
+
+
 CS_ROOT=/opt/cycle_server
 $CS_ROOT/cycle_server stop
 
@@ -119,9 +132,9 @@ $CS_ROOT/cycle_server start --wait
 #fi
 
 # Configure the CLI for root as the initial user
-/usr/bin/sleep 5
-sudo /usr/local/bin/cyclecloud initialize --batch --url="https://localhost:${CYCLECLOUD_HTTPS_PORT}" --verify-ssl="false" \
-                                     --username="${INITIAL_USER_NAME}" --password="${INITIAL_USER_PASSWORD}"
+/usr/bin/sleep  10
+PASSWORD_FLAG="--password=${INITIAL_USER_PASSWORD}"
+sudo /usr/local/bin/cyclecloud initialize --batch --url="https://localhost:${CYCLECLOUD_HTTPS_PORT}" --verify-ssl="false" --username="${INITIAL_USER_NAME}" "$PASSWORD_FLAG"
 
 # Configure the initial subscription
 cat <<EOF > /tmp/azure_data.json
@@ -141,7 +154,7 @@ cat <<EOF > /tmp/azure_data.json
 EOF
 
 if /usr/local/bin/cyclecloud account show azure | grep -q 'Credentials: azure'; then
-    echo "Account \"azure\" already exists.   Skipping account setup..."
+    echo 'Account "azure" already exists.   Skipping account setup...'
 else
     sudo /usr/local/bin/cyclecloud account create -f /tmp/azure_data.json
 fi

@@ -43,3 +43,9 @@ EOF
 
 sudo /usr/local/bin/cyclecloud import_cluster azurehpcood-slurm -c slurm -f scripts/cyclecloud-slurm-headless.txt -p scripts/azurehpcood-slurm.json --force
 sudo /usr/local/bin/cyclecloud start_cluster azurehpcood-slurm
+
+# Cyclecloud's Slurm cluster expects the munge key to be at /sched/munge/munge.key
+# (We'll mount /sched at /share/apps)
+mkdir -p /apps/munge/
+chmod 700 /apps/munge/
+cp -a /etc/munge/munge.key /apps/munge/
