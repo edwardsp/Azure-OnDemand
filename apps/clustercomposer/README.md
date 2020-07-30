@@ -1,10 +1,10 @@
 # Azure Cluster Composer OOD Application #
 
-Experimental RoR scaffold application to configure & deploy clusters with azhpc and register them with OnDemand. 
+Experimental RoR scaffold+mock-up application to configure & deploy clusters with azhpc and register them with OnDemand. 
 
 ## Setup Instructions ##
 
-For now this is provided as a user application - you'll need to enable <a href="https://osc.github.io/ood-documentation/master/app-development.html">App Development</a> in your OOD deployment, then git clone this repo into /share/home/hpcuser and create an ondemand/dev folder with a softlink as follows: 
+Cluster Composer is provided as a user application - you'll need to enable <a href="https://osc.github.io/ood-documentation/master/app-development.html">App Development</a> in your OOD deployment, then git clone this repo into /share/home/hpcuser and create an ondemand/dev folder with a softlink as follows: 
 
 ```
 [hpcuser@ood ~]$ cd /share/home/hpcuser/ondemand/dev
@@ -19,4 +19,10 @@ At this point you should see the "Develop" icon on the menu bar. Click on Develo
 
 <br>
 <img src="img/sandbox.JPG"> 
+<br>
+
+Once launched, you'll see the Cluster Summary view, then click on the "Create New Cluster" to launch the Cluster Composer tool as below. The purpose of the tool is to generate or customize an azhpc config.json file, launch the cluster and then register it with OOD. Clusters can be static or autoscaling, time-limited or persistent. 
+
+<br>
+<img src="img/composer.JPG"> 
 <br>
