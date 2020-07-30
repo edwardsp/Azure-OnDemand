@@ -56,10 +56,11 @@
                 "azcli",
                 "azcopy",
                 "nfsserver",
-                "cyclecloud8",
                 "slurmpackages",
                 "slurmserver",
                 "localuser",
+                "cyclecloud8",
+                "cyclecloud-slurm-cluster",
                 "add_compute_partition",
                 "add_viz_partition",
                 "add_interactive_partition",
@@ -245,6 +246,24 @@
                 "hpcadmin_id_rsa",
                 "hpcadmin_id_rsa.pub",
                 "config.json"
+            ],
+            "sudo": true
+        },
+        {
+            "script": "setup-cyclecloud-slurm-cluster.sh",
+            "tag": "cyclecloud-slurm-cluster",
+            "deps": [
+                "cyclecloud-slurm-headless.txt"
+            ],
+            "args": [
+                "variables.resource_group",
+                "variables.location",
+                "hpcvnet",
+                "hpc",
+                "variables.compute_max_instances",
+                "variables.hpc_image",
+                "variables.compute_vm_type",
+                "ood"
             ],
             "sudo": true
         },
