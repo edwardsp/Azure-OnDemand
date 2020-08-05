@@ -18,10 +18,14 @@ if [ -z "$NFS_SERVER" ]; then
     exit 1
 fi
 
+# Add cyclecloud CLI to the PATH
+export PATH=/usr/local/bin:$PATH
+
 # Account name currently hard-coded in setup-cyclecloud8.sh
 CC_ACCOUNT=azure
 SLURM_VERSION="19.05.5-1"
 #SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
+
 
 cat <<EOF > scripts/azurehpcood-slurm.json
 {
