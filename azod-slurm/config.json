@@ -350,6 +350,14 @@
             ]
         },
         {
+            "script": "setup-https-certificate.sh",
+            "tag": "open-ondemand",
+            "sudo": true,
+            "args": [
+                "fqdn.ood"
+            ]
+        },
+        {
             "script": "image-cvmfs.sh",
             "tag": "cvmfs",
             "sudo": true
