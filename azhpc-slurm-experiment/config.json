@@ -12,12 +12,17 @@
         "ood_vm_type": "Standard_D16s_v3",
         "interactive_vm_type": "Standard_D8s_v3",
         "viz_vm_type": "Standard_HB60rs",
+        "viz3d_vm_type": "Standard_NV6_Promo",
         "compute_vm_type": "Standard_HB60rs",
         "interactive_max_instances": 2,
         "viz_max_instances": 2,
+        "viz3d_max_instances": 2,
         "compute_max_instances": 2,
         "location": "westeurope",
-        "resource_group": "<NOT-SET>"
+        "resource_group": "<NOT-SET>",
+        "grafana_server": "ood",
+        "grafana_user": "variables.ood_user",
+        "grafana_pwd": "variables.ood_password"
     },
     "vnet": {
         "name": "hpcvnet",
@@ -59,6 +64,7 @@
                 "localuser",
                 "add_compute_partition",
                 "add_viz_partition",
+                "add_viz3d_partition",
                 "add_interactive_partition",
                 "open-ondemand",
                 "interactive-desktop",
@@ -66,7 +72,9 @@
                 "conda",
                 "theia",
                 "build-theia",
-                "cvmfs"
+                "cvmfs",
+                "grafana",
+                "telegraf"
             ]
         },
         "compute": {
@@ -83,7 +91,8 @@
                 "slurmpackages",
                 "munge",
                 "slurmclient",
-                "cvmfs"
+                "cvmfs",
+                "telegraf"
             ]
         },
         "interactive": {
@@ -102,14 +111,14 @@
                 "jupyter-app",
                 "conda",
                 "theia",
-                "cvmfs"
+                "cvmfs",
+                "telegraf"
             ]
         },
         "viz": {
             "type": "slurm_partition",
             "vm_type": "variables.viz_vm_type",
             "instances": "variables.viz_max_instances",
-            "availability_set": "compute",
             "image": "variables.hpc_image",
             "subnet": "hpc",
             "tags": [
@@ -120,8 +129,29 @@
                 "munge",
                 "slurmclient",
                 "interactive-desktop",
-                "cvmfs"
+                "cvmfs",
+                "telegraf"
             ]
+        },
+        "viz3d": {
+          "type": "slurm_partition",
+          "vm_type": "variables.viz3d_vm_type",
+          "instances": "variables.viz3d_max_instances",
+          "image": "variables.hpc_image",
+          "subnet": "hpc",
+          "os_storage_sku": "Standard_LRS",
+          "tags": [
+            "nfsclient",
+            "default",
+            "localuser",
+            "slurmpackages",
+            "munge",
+            "slurmclient",
+            "interactive-desktop",
+            "interactive-desktop-3d",
+            "cvmfs",
+            "telegraf"
+          ]
         }
     },
     "install": [
@@ -186,7 +216,7 @@
             "sudo": true
         },
         {
-            "script": "localuser.sh",
+            "script": "setup-localuser.sh",
             "args": [
                 "ood"
             ],
@@ -246,6 +276,17 @@
             "sudo": true
         },
         {
+          "script": "setup-slurmpartition.sh",
+          "tag": "add_viz3d_partition",
+          "args": [
+            "viz3d",
+            "variables.viz3d_max_instances",
+            "variables.viz3d_vm_type",
+            "variables.location"
+          ],
+          "sudo": true
+        },
+        {
             "script": "setup-slurmpartition.sh",
             "tag": "add_interactive_partition",
             "args": [
@@ -259,6 +300,11 @@
         {
             "script": "image-interactive-desktop.sh",
             "tag": "interactive-desktop",
+            "sudo": true
+        },
+        {
+            "script": "image-interactive-desktop-3d.sh",
+            "tag": "interactive-desktop-3d",
             "sudo": true
         },
         {
@@ -299,7 +345,8 @@
             "sudo": true,
             "args": [
                 "variables.ood_user",
-                "variables.ood_password"
+                "variables.ood_password",
+                "fqdn.ood"
             ]
         },
         {
@@ -311,6 +358,38 @@
             "script": "setup-cvmfs.sh",
             "tag": "cvmfs",
             "sudo": true
+        },
+        {
+            "script": "image-grafana.sh",
+            "tag": "grafana",
+            "sudo": true
+        },
+        {
+            "script": "setup-grafana.sh",
+            "tag": "grafana",
+            "deps": [
+                "telegraf_dashboard.json"
+            ],
+            "sudo": true,
+            "args": [
+                "variables.grafana_user",
+                "variables.grafana_pwd"
+            ]
+        },
+        {
+            "script": "image-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true
+        },
+        {
+            "script": "setup-telegraf.sh",
+            "tag": "telegraf",
+            "sudo": true,
+            "args": [
+                "variables.grafana_server",
+                "variables.grafana_user",
+                "variables.grafana_pwd"
+            ]
         },
         {
             "script": "setup-slurmd.sh",

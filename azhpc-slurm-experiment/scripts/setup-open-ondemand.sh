@@ -80,6 +80,31 @@ script:
     - "--partition=viz"
 EOF
 
+# submit 3d desktop session
+cat <<EOF >/etc/ood/config/apps/bc_desktop/viz3d.yml
+---
+title: "3D Desktop"
+cluster: "slurmcluster"
+form:
+  - desktop
+  - bc_num_hours
+attributes:
+  bc_num_hours:
+    value: 1
+  bc_job_name:
+    value: "test"
+  desktop: "xfce"
+submit: "submit/my_submit3d.yml.erb"
+EOF
+# custom script
+cat <<EOF >/etc/ood/config/apps/bc_desktop/submit/my_submit3d.yml.erb
+---
+script:
+  native:
+    - "--cpus-per-task=6"
+    - "--partition=viz3d"
+EOF
+
 # add jupyter app
 
 mkdir -p /var/www/ood/apps/sys/jupyter 
