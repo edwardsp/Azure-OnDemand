@@ -40,6 +40,7 @@ pushd /etc/ssl/$DOMAIN
 wget https://letsencrypt.org/certs/letsencryptauthorityx3.pem.txt
 popd
 cat <<EOF >>/etc/ood/config/ood_portal.yml
+servername: $DOMAIN
 ssl:
 - 'SSLCertificateFile "/etc/ssl/${DOMAIN}/${DOMAIN}.crt"'
 - 'SSLCertificateKeyFile "/etc/ssl/${DOMAIN}/${DOMAIN}.key"'

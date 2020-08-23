@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install nodejs
-curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
 yum install -y nodejs || exit 1
 
 # install yarn

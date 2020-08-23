@@ -4,7 +4,7 @@ compiled_package=${1-none}
 
 apps_dir=/apps
 
-if wget -q --method=HEAD $compile_package; then
+if wget -q -S --spider $compile_package; then
 
     cd /tmp
     wget $compiled_package

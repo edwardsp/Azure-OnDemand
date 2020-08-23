@@ -329,10 +329,7 @@
         },
         {
             "script": "setup-build-theia.sh",
-            "tag": "build-theia",
-            "args": [
-                "https://azurehpc.azureedge.net/rpms/theia.tgz"
-            ]
+            "tag": "build-theia"
         },
         {
             "script": "image-open-ondemand.sh",

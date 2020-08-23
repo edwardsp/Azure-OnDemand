@@ -9,14 +9,25 @@ iptables-save > /etc/sysconfig/iptables
 
 systemctl start httpd24-httpd
 
+#systemctl start ondemand-dex
+
+# enable basic auth
+cat <<EOF >/etc/ood/config/ood_portal.yml 
+auth:
+  - 'AuthType Basic'
+  - 'AuthName "private"'
+  - 'AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"'
+  - 'RequestHeader unset Authorization'
+  - 'Require valid-user'
+EOF
 scl enable ondemand -- htpasswd -b -c /opt/rh/httpd24/root/etc/httpd/.htpasswd $username $password
 
-# add self signed https certificate
-cat <<EOF >>/etc/ood/config/ood_portal.yml
-ssl:
-  - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
-  - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
-EOF
+## add self signed https certificate
+#cat <<EOF >>/etc/ood/config/ood_portal.yml
+#ssl:
+#  - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
+#  - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+#EOF
 
 # add cluster
 mkdir -p /etc/ood/config/clusters.d
