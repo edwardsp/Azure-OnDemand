@@ -336,6 +336,16 @@
             ]
         },
         {
+            "script": "image-open-ondemand-slurm-autoscale-app.sh",
+            "tag": "open-ondemand",
+            "sudo": true
+        },
+        {
+            "script": "setup-open-ondemand-slurm-autoscale-app.sh",
+            "tag": "open-ondemand",
+            "sudo": true
+        },
+        {
             "script": "setup-https-certificate.sh",
             "tag": "open-ondemand",
             "sudo": true,
