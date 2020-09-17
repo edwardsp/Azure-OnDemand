@@ -95,7 +95,7 @@
         "interactive": {
             "type": "slurm_partition",
             "vm_type": "variables.interactive_vm_type",
-            "instances": "variables.instances",
+            "instances": "variables.interactive_max_instances",
             "image": "variables.image",
             "subnet": "hpc",
             "tags": [
@@ -243,7 +243,7 @@
             "script": "setup-ldap-client.sh",
             "args": [
                 "--ldap-server",
-                "$(<hostlists/tags/ldapserver)"
+                "ood"
             ],
             "tag": "ldapclient",
             "sudo": true
