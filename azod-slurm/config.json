@@ -282,7 +282,7 @@
             "script": "setup-slurmpartition.sh",
             "tag": "slurmserver",
             "deps": [
-                "sku.lst"
+                "skus.lst"
             ],
             "sudo": true
         },
