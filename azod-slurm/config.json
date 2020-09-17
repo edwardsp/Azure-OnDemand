@@ -284,45 +284,9 @@
         },
         {
             "script": "setup-slurmpartition.sh",
-            "tag": "add_compute_partition",
-            "args": [
-                "compute",
-                "variables.compute_max_instances",
-                "variables.compute_vm_type",
-                "variables.location"
-            ],
-            "sudo": true
-        },
-        {
-            "script": "setup-slurmpartition.sh",
-            "tag": "add_viz_partition",
-            "args": [
-                "viz",
-                "variables.viz_max_instances",
-                "variables.viz_vm_type",
-                "variables.location"
-            ],
-            "sudo": true
-        },
-        {
-          "script": "setup-slurmpartition.sh",
-          "tag": "add_viz3d_partition",
-          "args": [
-            "viz3d",
-            "variables.viz3d_max_instances",
-            "variables.viz3d_vm_type",
-            "variables.location"
-          ],
-          "sudo": true
-        },
-        {
-            "script": "setup-slurmpartition.sh",
-            "tag": "add_interactive_partition",
-            "args": [
-                "interactive",
-                "variables.interactive_max_instances",
-                "variables.interactive_vm_type",
-                "variables.location"
+            "tag": "slurmserver",
+            "deps": [
+                "sku.lst"
             ],
             "sudo": true
         },
