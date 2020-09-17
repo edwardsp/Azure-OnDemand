@@ -9,18 +9,24 @@ iptables-save > /etc/sysconfig/iptables
 
 systemctl start httpd24-httpd
 
-#systemctl start ondemand-dex
+# setup pam (https://osc.github.io/ood-documentation/latest/authentication/pam.html)
+cp /usr/lib64/httpd/modules/mod_authnz_pam.so /opt/rh/httpd24/root/usr/lib64/httpd/modules/
+echo "LoadModule authnz_pam_module modules/mod_authnz_pam.so" >/opt/rh/httpd24/root/etc/httpd/conf.modules.d/55-authnz_pam.conf
+cp /etc/pam.d/sshd /etc/pam.d/ood
+chmod 640 /etc/shadow
+chgrp apache /etc/shadow
 
-# enable basic auth
+# enable basic auth with pam
 cat <<EOF >/etc/ood/config/ood_portal.yml 
 auth:
   - 'AuthType Basic'
-  - 'AuthName "private"'
-  - 'AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"'
-  - 'RequestHeader unset Authorization'
+  - 'AuthName "Open OnDemand"'
+  - 'AuthBasicProvider PAM'
+  - 'AuthPAMService ood'
   - 'Require valid-user'
+# Capture system user name from authenticated user name
+user_map_cmd: "/opt/ood/ood_auth_map/bin/ood_auth_map.regex"
 EOF
-scl enable ondemand -- htpasswd -b -c /opt/rh/httpd24/root/etc/httpd/.htpasswd $username $password
 
 ## add self signed https certificate
 #cat <<EOF >>/etc/ood/config/ood_portal.yml
