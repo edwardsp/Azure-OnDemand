@@ -57,3 +57,9 @@ systemctl disable firstboot-graphical
 systemctl set-default graphical.target
 systemctl isolate graphical.target
 
+# install CUDA
+
+yum-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
+yum clean all
+yum -y install nvidia-driver-latest-dkms cuda
+yum -y install cuda-drivers
